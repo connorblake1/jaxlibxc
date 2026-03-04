@@ -76,6 +76,26 @@ class TestGGAXPBE:
         _test_gga_functional('gga_x_pbe_sol', spin=0)
 
 
+class TestGGAXRPBE:
+    def test_unpol(self):
+        _test_gga_functional('gga_x_rpbe', spin=0)
+
+    def test_pol(self):
+        _test_gga_functional('gga_x_rpbe', spin=1)
+
+    def test_differs_from_pbe(self):
+        """RPBE must differ from PBE (exponential vs rational enhancement)."""
+        rho = jnp.array([0.1, 0.5, 1.0])
+        sigma = jnp.array([0.01, 0.1, 0.3])
+        inp = {'rho': rho, 'sigma': sigma}
+        pbe = jaxlibxc.Functional('gga_x_pbe', spin='unpolarized')
+        rpbe = jaxlibxc.Functional('gga_x_rpbe', spin='unpolarized')
+        zk_pbe = pbe.compute(inp, do_exc=True)['zk']
+        zk_rpbe = rpbe.compute(inp, do_exc=True)['zk']
+        assert not np.allclose(np.array(zk_pbe), np.array(zk_rpbe), atol=1e-10), \
+            "RPBE should differ from PBE"
+
+
 class TestGGAXB88:
     def test_unpol(self):
         _test_gga_functional('gga_x_b88', spin=0)
@@ -101,6 +121,22 @@ class TestGGACLYP:
 
     def test_pol(self):
         _test_gga_functional('gga_c_lyp', spin=1)
+
+
+class TestGGACPW91:
+    def test_unpol(self):
+        _test_gga_functional('gga_c_pw91', spin=0)
+
+    def test_pol(self):
+        _test_gga_functional('gga_c_pw91', spin=1)
+
+
+class TestB3PW91:
+    def test_unpol(self):
+        _test_gga_functional('hyb_gga_xc_b3pw91', spin=0)
+
+    def test_pol(self):
+        _test_gga_functional('hyb_gga_xc_b3pw91', spin=1)
 
 
 class TestGGAJit:

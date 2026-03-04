@@ -98,6 +98,39 @@ class TestLDAX:
         assert abs(vrho_ad - vrho_fd) < 1e-6, f"AD: {vrho_ad}, FD: {vrho_fd}"
 
 
+class TestLDAX2D:
+    """Test 2D LDA exchange against pyscf/libxc."""
+
+    def test_unpol_exc(self):
+        func = jaxlibxc.Functional('lda_x_2d', spin='unpolarized')
+        ref_exc, _, _, _ = pyscf_eval_xc('lda_x_2d', UNPOL_RHO, spin=0, deriv=0)
+        out = func.compute({'rho': jnp.array(UNPOL_RHO)}, do_exc=True)
+        assert_close(out['zk'].flatten(), ref_exc, TOL_EXC, "LDA_X_2D unpol exc")
+
+    def test_unpol_vrho(self):
+        func = jaxlibxc.Functional('lda_x_2d', spin='unpolarized')
+        _, ref_vxc, _, _ = pyscf_eval_xc('lda_x_2d', UNPOL_RHO, spin=0, deriv=1)
+        out = func.compute({'rho': jnp.array(UNPOL_RHO)}, do_vxc=True)
+        assert_close(out['vrho'].flatten(), ref_vxc[0], TOL_VXC, "LDA_X_2D unpol vrho")
+
+    def test_pol_exc(self):
+        func = jaxlibxc.Functional('lda_x_2d', spin='polarized')
+        ref_exc, _, _, _ = pyscf_eval_xc('lda_x_2d', POL_RHO, spin=1, deriv=0)
+        out = func.compute({'rho': jnp.array(POL_RHO)}, do_exc=True)
+        assert_close(out['zk'].flatten(), ref_exc, TOL_EXC, "LDA_X_2D pol exc")
+
+    def test_differs_from_3d(self):
+        """2D LDA exchange must differ from 3D."""
+        rho = jnp.array([0.1, 0.5, 1.0, 5.0])
+        inp = {'rho': rho}
+        f3d = jaxlibxc.Functional('lda_x', spin='unpolarized')
+        f2d = jaxlibxc.Functional('lda_x_2d', spin='unpolarized')
+        zk_3d = f3d.compute(inp, do_exc=True)['zk']
+        zk_2d = f2d.compute(inp, do_exc=True)['zk']
+        assert not np.allclose(np.array(zk_3d), np.array(zk_2d), atol=1e-10), \
+            "2D and 3D LDA exchange should differ"
+
+
 class TestLDACPW:
     """Test PW92 correlation (after Phase 2 implementation)."""
     pass

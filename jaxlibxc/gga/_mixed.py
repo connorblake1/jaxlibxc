@@ -42,7 +42,7 @@ register_mixed(
         (1.0 - 0.20 - 0.72, 'lda_x'),
         (0.72, 'gga_x_b88'),
         (1.0 - 0.81, 'lda_c_pw'),
-        (0.81, 'gga_c_pbe'),                 # PW91 ≈ PBE for this purpose
+        (0.81, 'gga_c_pw91'),
     ],
     hyb_exx=0.20,
 )

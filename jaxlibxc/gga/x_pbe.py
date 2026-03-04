@@ -101,7 +101,23 @@ register(FunctionalDef(
     n_internal=3,
 ))
 
-# RPBE exchange (ID 144) -- Hammer et al 1999
+# RPBE exchange (ID 144) -- Hammer, Hansen, Norskov, PRB 59, 7413 (1999)
+# RPBE uses an exponential enhancement factor, NOT the PBE rational form.
+def _rpbe_enhance(params, xs):
+    """RPBE enhancement factor: F(s) = 1 + kappa*(1 - exp(-mu*s^2/kappa))."""
+    kappa = params['kappa']
+    mu = params['mu']
+    s = X2S * xs
+    s2 = s**2
+    return 1.0 + kappa * (1.0 - jnp.exp(-mu * s2 / kappa))
+
+
+def _rpbe_x_energy(params, rs, z, xt, xs0, xs1):
+    """RPBE exchange energy density per electron."""
+    enhance = lambda xs: _rpbe_enhance(params, xs)
+    return gga_exchange(enhance, rs, z, xs0, xs1)
+
+
 register(FunctionalDef(
     info=FunctionalInfo(
         number=144,
@@ -109,7 +125,7 @@ register(FunctionalDef(
         family=Family.GGA,
         kind=Kind.EXCHANGE,
     ),
-    energy_fn=_pbe_x_energy,
+    energy_fn=_rpbe_x_energy,
     default_params={
         'kappa': 0.8040,
         'mu': 0.2195149727645171,
