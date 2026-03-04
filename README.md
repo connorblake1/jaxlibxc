@@ -1,6 +1,10 @@
 # jaxlibxc
 
+[![Documentation Status](https://readthedocs.org/projects/jaxlibxc/badge/?version=latest)](https://jaxlibxc.readthedocs.io/en/latest/?badge=latest)
+
 A pure Python/JAX reimplementation of [libxc](https://libxc.gitlab.io/), the library of exchange-correlation (XC) functionals for density functional theory (DFT).
+
+**[Documentation](https://jaxlibxc.readthedocs.io)** | **[Installation](https://jaxlibxc.readthedocs.io/en/latest/installation.html)** | **[Quick Start](https://jaxlibxc.readthedocs.io/en/latest/quickstart.html)**
 
 ## Why?
 
@@ -23,10 +27,10 @@ libxc provides 649 XC functionals implemented in C with symbolically-generated d
 ```bash
 git clone https://github.com/connorblake1/jaxlibxc.git
 cd jaxlibxc
-pip install jax jaxlib numpy
+pip install -e .
 ```
 
-Requires Python 3.9+ and JAX with float64 support (enabled automatically).
+Requires Python 3.9+ and JAX with float64 support (enabled automatically). See the [installation guide](https://jaxlibxc.readthedocs.io/en/latest/installation.html) for GPU setup and optional dependencies.
 
 ## Quick Start
 
@@ -152,4 +156,4 @@ If you use this library in published work, please cite both this project and the
 
 ## Contributing
 
-This project is in active development. ~24 primitive functionals and 4 hybrids are implemented. The framework supports mechanical addition of the remaining ~245 primitives and ~370 mixed functionals following established patterns. See `CLAUDE.md` for the codebase guide.
+This project is in active development. ~24 primitive functionals and 4 hybrids are implemented. The framework supports mechanical addition of the remaining ~245 primitives and ~370 mixed functionals following established patterns. See the [contributing guide](https://jaxlibxc.readthedocs.io/en/latest/contributing.html) for how to add new functionals.
