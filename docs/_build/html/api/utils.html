@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utilities &mdash; jaxlibxc 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mixed/Hybrid Functionals" href="mixed.html" />
+    <link rel="prev" title="Exchange Wrappers" href="exchange.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jaxlibxc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#from-source">From source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#optional-testing">Optional: testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#optional-documentation">Optional: documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#verifying-the-installation">Verifying the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#gpu-support">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#basic-usage">Basic usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#gga-functionals">GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#meta-gga-functionals">Meta-GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#spin-polarized-calculations">Spin-polarized calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#second-derivatives">Second derivatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#hybrid-functionals">Hybrid functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#listing-available-functionals">Listing available functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#jit-compilation">JIT compilation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/functionals.html">Functionals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/functionals.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/functionals.html#implemented-functionals">Implemented functionals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/functionals.html#lda-primitives">LDA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/functionals.html#gga-primitives">GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/functionals.html#meta-gga-primitives">Meta-GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/functionals.html#hybrid-functionals">Hybrid functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/functionals.html#input-variables-by-family">Input variables by family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/functionals.html#lda">LDA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/functionals.html#gga">GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/functionals.html#meta-gga">Meta-GGA</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/functionals.html#output-variables">Output variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/functionals.html#internal-variables">Internal variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/derivatives.html">Automatic Derivatives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/derivatives.html#how-it-works">How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/derivatives.html#derivative-levels">Derivative levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/derivatives.html#preprocessing-clamps-and-stop-gradient">Preprocessing clamps and stop_gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/derivatives.html#numerical-safety">Numerical safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/derivatives.html#comparison-with-libxc">Comparison with libxc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/ml_optimization.html">Differentiable Parameters for ML</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/ml_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/ml_optimization.html#accessing-parameters">Accessing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/ml_optimization.html#modifying-parameters">Modifying parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/ml_optimization.html#gradient-w-r-t-parameters">Gradient w.r.t. parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/ml_optimization.html#use-cases">Use cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/ml_optimization.html#fitting-to-reference-data">Fitting to reference data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/ml_optimization.html#neural-network-enhanced-functionals">Neural network-enhanced functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/ml_optimization.html#parameter-reference">Parameter reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#public-api">Public API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html">jaxlibxc.Functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="registry.html">Registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#internal-modules">Internal modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="constants.html">Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autodiff.html">Autodiff Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms.html">Variable Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numerical.html">Numerical Safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exchange.html">Exchange Wrappers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mixed.html">Mixed/Hybrid Functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#functional-families">Functional families</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lda.html">LDA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gga.html">GGA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mgga.html">Meta-GGA Functionals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#adding-a-new-functional">Adding a new functional</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#gga-exchange">GGA exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#gga-correlation">GGA correlation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#meta-gga">Meta-GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#mixed-hybrid-functional">Mixed/hybrid functional</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#testing">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#test-structure">Test structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#tolerances">Tolerances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#common-gotchas">Common gotchas</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jaxlibxc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Utilities</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/utils.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utilities">
+<h1>Utilities<a class="headerlink" href="#utilities" title="Link to this heading"></a></h1>
+<p>Core utility functions translated from libxc’s <code class="docutils literal notranslate"><span class="pre">maple/util.mpl</span></code>: spin interpolation, density conversions, screening, and exchange/kinetic base formulas.</p>
+<p id="module-jaxlibxc._utils">Core utility functions translated from libxc maple/util.mpl.</p>
+<p>These are the building blocks used by all functionals: spin interpolation,
+density conversions, screening, and exchange/kinetic base formulas.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.r_ws">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">r_ws</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#r_ws"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.r_ws" title="Link to this definition"></a></dt>
+<dd><p>Wigner-Seitz radius from electron density.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.n_total">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">n_total</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#n_total"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.n_total" title="Link to this definition"></a></dt>
+<dd><p>Total electron density from Wigner-Seitz radius.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.n_spin">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">n_spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#n_spin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.n_spin" title="Link to this definition"></a></dt>
+<dd><p>Spin density: n_s = (1+z) * n_total / 2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.opz_pow_n">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">opz_pow_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#opz_pow_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.opz_pow_n" title="Link to this definition"></a></dt>
+<dd><p>Protected (1+z)^n: avoids 0^n when z ~ -1.</p>
+<dl class="simple">
+<dt>opz_pow_n(z, n) = (zeta_threshold)^n  if 1+z &lt;= zeta_threshold</dt><dd><p>(1+z)^n             otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.z_thr">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">z_thr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#z_thr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.z_thr" title="Link to this definition"></a></dt>
+<dd><p>Screen extreme values of zeta to avoid singularities.</p>
+<dl class="simple">
+<dt>z_thr(z) = zeta_threshold - 1   if 1+z &lt;= zeta_threshold</dt><dd><p>= 1 - zeta_threshold   if 1-z &lt;= zeta_threshold
+= z                    otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.f_zeta">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">f_zeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#f_zeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.f_zeta" title="Link to this definition"></a></dt>
+<dd><p>Spin-polarization interpolation function (Perdew 1992, Eq. 9).</p>
+<p>f(z) = [(1+z)^(4/3) + (1-z)^(4/3) - 2] / [2^(4/3) - 2]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.mphi">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">mphi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#mphi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.mphi" title="Link to this definition"></a></dt>
+<dd><p>Spin scaling factor: phi(z) = [(1+z)^(2/3) + (1-z)^(2/3)] / 2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.tt">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">tt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#tt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.tt" title="Link to this definition"></a></dt>
+<dd><p>Reduced gradient for correlation: t = xt / (4 * 2^(1/3) * phi(z) * sqrt(rs)).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.lda_x_spin">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">lda_x_spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#lda_x_spin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.lda_x_spin" title="Link to this definition"></a></dt>
+<dd><p>LDA exchange energy density per electron for one spin channel.</p>
+<p>E_x^LDA = LDA_X_FACTOR * (1+z)^(4/3) * 2^(-4/3) * (RS_FACTOR/rs)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.lda_k_spin">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">lda_k_spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#lda_k_spin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.lda_k_spin" title="Link to this definition"></a></dt>
+<dd><p>LDA kinetic energy density per electron for one spin channel.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.screen_dens">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">screen_dens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dens_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#screen_dens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.screen_dens" title="Link to this definition"></a></dt>
+<dd><p>Returns True where spin density is below threshold.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxlibxc._utils.screen_dens_zeta">
+<span class="sig-prename descclassname"><span class="pre">jaxlibxc._utils.</span></span><span class="sig-name descname"><span class="pre">screen_dens_zeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dens_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxlibxc/_utils.html#screen_dens_zeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxlibxc._utils.screen_dens_zeta" title="Link to this definition"></a></dt>
+<dd><p>Screen by both density and extreme zeta values.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="exchange.html" class="btn btn-neutral float-left" title="Exchange Wrappers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mixed.html" class="btn btn-neutral float-right" title="Mixed/Hybrid Functionals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Connor Blake.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

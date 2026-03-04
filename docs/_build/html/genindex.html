@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index &mdash; jaxlibxc 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jaxlibxc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-source">From source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#optional-testing">Optional: testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#optional-documentation">Optional: documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verifying-the-installation">Verifying the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#gpu-support">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#basic-usage">Basic usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#gga-functionals">GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#meta-gga-functionals">Meta-GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#spin-polarized-calculations">Spin-polarized calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#second-derivatives">Second derivatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#hybrid-functionals">Hybrid functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#listing-available-functionals">Listing available functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#jit-compilation">JIT compilation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/functionals.html">Functionals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/functionals.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/functionals.html#implemented-functionals">Implemented functionals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/functionals.html#lda-primitives">LDA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/functionals.html#gga-primitives">GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/functionals.html#meta-gga-primitives">Meta-GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/functionals.html#hybrid-functionals">Hybrid functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/functionals.html#input-variables-by-family">Input variables by family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/functionals.html#lda">LDA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/functionals.html#gga">GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/functionals.html#meta-gga">Meta-GGA</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/functionals.html#output-variables">Output variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/functionals.html#internal-variables">Internal variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/derivatives.html">Automatic Derivatives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/derivatives.html#how-it-works">How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/derivatives.html#derivative-levels">Derivative levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/derivatives.html#preprocessing-clamps-and-stop-gradient">Preprocessing clamps and stop_gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/derivatives.html#numerical-safety">Numerical safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/derivatives.html#comparison-with-libxc">Comparison with libxc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/ml_optimization.html">Differentiable Parameters for ML</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/ml_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/ml_optimization.html#accessing-parameters">Accessing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/ml_optimization.html#modifying-parameters">Modifying parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/ml_optimization.html#gradient-w-r-t-parameters">Gradient w.r.t. parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/ml_optimization.html#use-cases">Use cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/ml_optimization.html#fitting-to-reference-data">Fitting to reference data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/ml_optimization.html#neural-network-enhanced-functionals">Neural network-enhanced functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/ml_optimization.html#parameter-reference">Parameter reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#public-api">Public API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/functional.html">jaxlibxc.Functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/registry.html">Registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#internal-modules">Internal modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/constants.html">Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/autodiff.html">Autodiff Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/transforms.html">Variable Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/numerical.html">Numerical Safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/exchange.html">Exchange Wrappers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html">Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/mixed.html">Mixed/Hybrid Functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#functional-families">Functional families</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/lda.html">LDA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/gga.html">GGA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/mgga.html">Meta-GGA Functionals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#adding-a-new-functional">Adding a new functional</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#gga-exchange">GGA exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#gga-correlation">GGA correlation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#meta-gga">Meta-GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#mixed-hybrid-functional">Mixed/hybrid functional</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#testing">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#test-structure">Test structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#tolerances">Tolerances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#common-gotchas">Common gotchas</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jaxlibxc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Index</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/registry.html#jaxlibxc._registry.available">available() (in module jaxlibxc._registry)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.MixedDef.components">components (jaxlibxc._types.MixedDef attribute)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.compute">compute() (jaxlibxc.functional.Functional method)</a>
+</li>
+      <li><a href="api/autodiff.html#jaxlibxc._autodiff.compute_exc">compute_exc() (in module jaxlibxc._autodiff)</a>
+</li>
+      <li><a href="api/autodiff.html#jaxlibxc._autodiff.compute_fxc_gga">compute_fxc_gga() (in module jaxlibxc._autodiff)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/autodiff.html#jaxlibxc._autodiff.compute_fxc_lda">compute_fxc_lda() (in module jaxlibxc._autodiff)</a>
+</li>
+      <li><a href="api/autodiff.html#jaxlibxc._autodiff.compute_vxc_gga">compute_vxc_gga() (in module jaxlibxc._autodiff)</a>
+</li>
+      <li><a href="api/autodiff.html#jaxlibxc._autodiff.compute_vxc_lda">compute_vxc_lda() (in module jaxlibxc._autodiff)</a>
+</li>
+      <li><a href="api/autodiff.html#jaxlibxc._autodiff.compute_vxc_mgga">compute_vxc_mgga() (in module jaxlibxc._autodiff)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.Kind.CORRELATION">CORRELATION (jaxlibxc._types.Kind attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalDef.default_params">default_params (jaxlibxc._types.FunctionalDef attribute)</a>
+
+      <ul>
+        <li><a href="api/types.html#jaxlibxc._types.MixedDef.default_params">(jaxlibxc._types.MixedDef attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalDef.energy_fn">energy_fn (jaxlibxc._types.FunctionalDef attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.Kind.EXCHANGE">EXCHANGE (jaxlibxc._types.Kind attribute)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.Kind.EXCHANGE_CORRELATION">EXCHANGE_CORRELATION (jaxlibxc._types.Kind attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.f_zeta">f_zeta() (in module jaxlibxc._utils)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.Family">Family (class in jaxlibxc._types)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalInfo.family">family (jaxlibxc._types.FunctionalInfo attribute)</a>
+
+      <ul>
+        <li><a href="api/functional.html#jaxlibxc.functional.Functional.family">(jaxlibxc.functional.Functional property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional">Functional (class in jaxlibxc.functional)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalDef">FunctionalDef (class in jaxlibxc._types)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalInfo">FunctionalInfo (class in jaxlibxc._types)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/registry.html#jaxlibxc._registry.get">get() (in module jaxlibxc._registry)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.get_family">get_family() (jaxlibxc.functional.Functional method)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.get_kind">get_kind() (jaxlibxc.functional.Functional method)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.get_name">get_name() (jaxlibxc.functional.Functional method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.get_number">get_number() (jaxlibxc.functional.Functional method)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.Family.GGA">GGA (jaxlibxc._types.Family attribute)</a>
+</li>
+      <li><a href="api/exchange.html#jaxlibxc._exchange.gga_exchange">gga_exchange() (in module jaxlibxc._exchange)</a>
+</li>
+      <li><a href="api/exchange.html#jaxlibxc._exchange.gga_exchange_nsp">gga_exchange_nsp() (in module jaxlibxc._exchange)</a>
+</li>
+      <li><a href="api/exchange.html#jaxlibxc._exchange.gga_kinetic">gga_kinetic() (in module jaxlibxc._exchange)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.MixedDef.hyb_exx">hyb_exx (jaxlibxc._types.MixedDef attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalDef.info">info (jaxlibxc._types.FunctionalDef attribute)</a>
+
+      <ul>
+        <li><a href="api/types.html#jaxlibxc._types.MixedDef.info">(jaxlibxc._types.MixedDef attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    jaxlibxc._autodiff
+
+      <ul>
+        <li><a href="api/autodiff.html#module-jaxlibxc._autodiff">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._constants
+
+      <ul>
+        <li><a href="api/constants.html#module-jaxlibxc._constants">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._exchange
+
+      <ul>
+        <li><a href="api/exchange.html#module-jaxlibxc._exchange">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._mixed
+
+      <ul>
+        <li><a href="api/mixed.html#module-jaxlibxc._mixed">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._numerical
+
+      <ul>
+        <li><a href="api/numerical.html#module-jaxlibxc._numerical">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._registry
+
+      <ul>
+        <li><a href="api/registry.html#module-jaxlibxc._registry">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._transforms
+
+      <ul>
+        <li><a href="api/transforms.html#module-jaxlibxc._transforms">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._types
+
+      <ul>
+        <li><a href="api/types.html#module-jaxlibxc._types">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc._utils
+
+      <ul>
+        <li><a href="api/utils.html#module-jaxlibxc._utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.gga._mixed
+
+      <ul>
+        <li><a href="api/gga.html#module-jaxlibxc.gga._mixed">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    jaxlibxc.gga.c_lyp
+
+      <ul>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.c_lyp">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.gga.c_pbe
+
+      <ul>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.c_pbe">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.gga.x_b88
+
+      <ul>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.x_b88">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.gga.x_pbe
+
+      <ul>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.x_pbe">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.lda.c_pw
+
+      <ul>
+        <li><a href="api/lda.html#module-jaxlibxc.lda.c_pw">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.lda.c_vwn
+
+      <ul>
+        <li><a href="api/lda.html#module-jaxlibxc.lda.c_vwn">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.lda.x
+
+      <ul>
+        <li><a href="api/lda.html#module-jaxlibxc.lda.x">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.mgga.c_scan
+
+      <ul>
+        <li><a href="api/mgga.html#module-jaxlibxc.mgga.c_scan">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxlibxc.mgga.x_scan
+
+      <ul>
+        <li><a href="api/mgga.html#module-jaxlibxc.mgga.x_scan">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.Kind">Kind (class in jaxlibxc._types)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalInfo.kind">kind (jaxlibxc._types.FunctionalInfo attribute)</a>
+
+      <ul>
+        <li><a href="api/functional.html#jaxlibxc.functional.Functional.kind">(jaxlibxc.functional.Functional property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.Kind.KINETIC">KINETIC (jaxlibxc._types.Kind attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.Family.LDA">LDA (jaxlibxc._types.Family attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.lda_k_spin">lda_k_spin() (in module jaxlibxc._utils)</a>
+</li>
+      <li><a href="api/utils.html#jaxlibxc._utils.lda_x_spin">lda_x_spin() (in module jaxlibxc._utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mixed.html#jaxlibxc._mixed.make_mixed_energy">make_mixed_energy() (in module jaxlibxc._mixed)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.Family.MGGA">MGGA (jaxlibxc._types.Family attribute)</a>
+</li>
+      <li><a href="api/exchange.html#jaxlibxc._exchange.mgga_exchange">mgga_exchange() (in module jaxlibxc._exchange)</a>
+</li>
+      <li><a href="api/exchange.html#jaxlibxc._exchange.mgga_exchange_nsp">mgga_exchange_nsp() (in module jaxlibxc._exchange)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.MixedDef">MixedDef (class in jaxlibxc._types)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api/autodiff.html#module-jaxlibxc._autodiff">jaxlibxc._autodiff</a>
+</li>
+        <li><a href="api/constants.html#module-jaxlibxc._constants">jaxlibxc._constants</a>
+</li>
+        <li><a href="api/exchange.html#module-jaxlibxc._exchange">jaxlibxc._exchange</a>
+</li>
+        <li><a href="api/mixed.html#module-jaxlibxc._mixed">jaxlibxc._mixed</a>
+</li>
+        <li><a href="api/numerical.html#module-jaxlibxc._numerical">jaxlibxc._numerical</a>
+</li>
+        <li><a href="api/registry.html#module-jaxlibxc._registry">jaxlibxc._registry</a>
+</li>
+        <li><a href="api/transforms.html#module-jaxlibxc._transforms">jaxlibxc._transforms</a>
+</li>
+        <li><a href="api/types.html#module-jaxlibxc._types">jaxlibxc._types</a>
+</li>
+        <li><a href="api/utils.html#module-jaxlibxc._utils">jaxlibxc._utils</a>
+</li>
+        <li><a href="api/gga.html#module-jaxlibxc.gga._mixed">jaxlibxc.gga._mixed</a>
+</li>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.c_lyp">jaxlibxc.gga.c_lyp</a>
+</li>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.c_pbe">jaxlibxc.gga.c_pbe</a>
+</li>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.x_b88">jaxlibxc.gga.x_b88</a>
+</li>
+        <li><a href="api/gga.html#module-jaxlibxc.gga.x_pbe">jaxlibxc.gga.x_pbe</a>
+</li>
+        <li><a href="api/lda.html#module-jaxlibxc.lda.c_pw">jaxlibxc.lda.c_pw</a>
+</li>
+        <li><a href="api/lda.html#module-jaxlibxc.lda.c_vwn">jaxlibxc.lda.c_vwn</a>
+</li>
+        <li><a href="api/lda.html#module-jaxlibxc.lda.x">jaxlibxc.lda.x</a>
+</li>
+        <li><a href="api/mgga.html#module-jaxlibxc.mgga.c_scan">jaxlibxc.mgga.c_scan</a>
+</li>
+        <li><a href="api/mgga.html#module-jaxlibxc.mgga.x_scan">jaxlibxc.mgga.x_scan</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.mphi">mphi() (in module jaxlibxc._utils)</a>
+</li>
+      <li><a href="api/numerical.html#jaxlibxc._numerical.my_piecewise3">my_piecewise3() (in module jaxlibxc._numerical)</a>
+</li>
+      <li><a href="api/numerical.html#jaxlibxc._numerical.my_piecewise5">my_piecewise5() (in module jaxlibxc._numerical)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalDef.n_internal">n_internal (jaxlibxc._types.FunctionalDef attribute)</a>
+</li>
+      <li><a href="api/utils.html#jaxlibxc._utils.n_spin">n_spin() (in module jaxlibxc._utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.n_total">n_total() (in module jaxlibxc._utils)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalInfo.name">name (jaxlibxc._types.FunctionalInfo attribute)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalInfo.number">number (jaxlibxc._types.FunctionalInfo attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.opz_pow_n">opz_pow_n() (in module jaxlibxc._utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.params">params (jaxlibxc.functional.Functional property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.r_ws">r_ws() (in module jaxlibxc._utils)</a>
+</li>
+      <li><a href="api/types.html#jaxlibxc._types.FunctionalInfo.references">references (jaxlibxc._types.FunctionalInfo attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/registry.html#jaxlibxc._registry.register">register() (in module jaxlibxc._registry)</a>
+</li>
+      <li><a href="api/mixed.html#jaxlibxc._mixed.register_mixed">register_mixed() (in module jaxlibxc._mixed)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/numerical.html#jaxlibxc._numerical.safe_div">safe_div() (in module jaxlibxc._numerical)</a>
+</li>
+      <li><a href="api/numerical.html#jaxlibxc._numerical.safe_log">safe_log() (in module jaxlibxc._numerical)</a>
+</li>
+      <li><a href="api/numerical.html#jaxlibxc._numerical.safe_pow">safe_pow() (in module jaxlibxc._numerical)</a>
+</li>
+      <li><a href="api/numerical.html#jaxlibxc._numerical.safe_sqrt">safe_sqrt() (in module jaxlibxc._numerical)</a>
+</li>
+      <li><a href="api/utils.html#jaxlibxc._utils.screen_dens">screen_dens() (in module jaxlibxc._utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.screen_dens_zeta">screen_dens_zeta() (in module jaxlibxc._utils)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.set_dens_threshold">set_dens_threshold() (jaxlibxc.functional.Functional method)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.set_sigma_threshold">set_sigma_threshold() (jaxlibxc.functional.Functional method)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.set_tau_threshold">set_tau_threshold() (jaxlibxc.functional.Functional method)</a>
+</li>
+      <li><a href="api/functional.html#jaxlibxc.functional.Functional.set_zeta_threshold">set_zeta_threshold() (jaxlibxc.functional.Functional method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/transforms.html#jaxlibxc._transforms.transform_gga_pol">transform_gga_pol() (in module jaxlibxc._transforms)</a>
+</li>
+      <li><a href="api/transforms.html#jaxlibxc._transforms.transform_gga_unpol">transform_gga_unpol() (in module jaxlibxc._transforms)</a>
+</li>
+      <li><a href="api/transforms.html#jaxlibxc._transforms.transform_lda_pol">transform_lda_pol() (in module jaxlibxc._transforms)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/transforms.html#jaxlibxc._transforms.transform_lda_unpol">transform_lda_unpol() (in module jaxlibxc._transforms)</a>
+</li>
+      <li><a href="api/transforms.html#jaxlibxc._transforms.transform_mgga_pol">transform_mgga_pol() (in module jaxlibxc._transforms)</a>
+</li>
+      <li><a href="api/transforms.html#jaxlibxc._transforms.transform_mgga_unpol">transform_mgga_unpol() (in module jaxlibxc._transforms)</a>
+</li>
+      <li><a href="api/utils.html#jaxlibxc._utils.tt">tt() (in module jaxlibxc._utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#jaxlibxc._utils.z_thr">z_thr() (in module jaxlibxc._utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Connor Blake.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jaxlibxc._transforms &mdash; jaxlibxc 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jaxlibxc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#from-source">From source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#optional-testing">Optional: testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#optional-documentation">Optional: documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#verifying-the-installation">Verifying the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#gpu-support">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#basic-usage">Basic usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#gga-functionals">GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#meta-gga-functionals">Meta-GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#spin-polarized-calculations">Spin-polarized calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#second-derivatives">Second derivatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#hybrid-functionals">Hybrid functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#listing-available-functionals">Listing available functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#jit-compilation">JIT compilation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide/functionals.html">Functionals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/functionals.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/functionals.html#implemented-functionals">Implemented functionals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/functionals.html#lda-primitives">LDA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/functionals.html#gga-primitives">GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/functionals.html#meta-gga-primitives">Meta-GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/functionals.html#hybrid-functionals">Hybrid functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/functionals.html#input-variables-by-family">Input variables by family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/functionals.html#lda">LDA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/functionals.html#gga">GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/functionals.html#meta-gga">Meta-GGA</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/functionals.html#output-variables">Output variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/functionals.html#internal-variables">Internal variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide/derivatives.html">Automatic Derivatives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/derivatives.html#how-it-works">How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/derivatives.html#derivative-levels">Derivative levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/derivatives.html#preprocessing-clamps-and-stop-gradient">Preprocessing clamps and stop_gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/derivatives.html#numerical-safety">Numerical safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/derivatives.html#comparison-with-libxc">Comparison with libxc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide/ml_optimization.html">Differentiable Parameters for ML</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/ml_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/ml_optimization.html#accessing-parameters">Accessing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/ml_optimization.html#modifying-parameters">Modifying parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/ml_optimization.html#gradient-w-r-t-parameters">Gradient w.r.t. parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/ml_optimization.html#use-cases">Use cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/ml_optimization.html#fitting-to-reference-data">Fitting to reference data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user_guide/ml_optimization.html#neural-network-enhanced-functionals">Neural network-enhanced functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide/ml_optimization.html#parameter-reference">Parameter reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/index.html#public-api">Public API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/functional.html">jaxlibxc.Functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/registry.html">Registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/index.html#internal-modules">Internal modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/constants.html">Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/autodiff.html">Autodiff Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/transforms.html">Variable Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/numerical.html">Numerical Safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/exchange.html">Exchange Wrappers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/utils.html">Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/mixed.html">Mixed/Hybrid Functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/index.html#functional-families">Functional families</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/lda.html">LDA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/gga.html">GGA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/mgga.html">Meta-GGA Functionals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#adding-a-new-functional">Adding a new functional</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#gga-exchange">GGA exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#gga-correlation">GGA correlation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#meta-gga">Meta-GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#mixed-hybrid-functional">Mixed/hybrid functional</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#testing">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#test-structure">Test structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#tolerances">Tolerances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#common-gotchas">Common gotchas</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jaxlibxc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jaxlibxc._transforms</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jaxlibxc._transforms</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Variable transformations from user inputs to internal variables.</span>
+
+<span class="sd">Converts (rho, sigma, lapl, tau) -&gt; (rs, zeta, xt, xs0, xs1, u0, u1, t0, t1)</span>
+<span class="sd">with density thresholding matching libxc&#39;s work_{lda,gga,mgga}_inc.c.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">._constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RS_FACTOR</span><span class="p">,</span> <span class="n">DIMENSIONS</span><span class="p">,</span> <span class="n">DEFAULT_DENS_THRESHOLD</span><span class="p">,</span>
+    <span class="n">DEFAULT_SIGMA_THRESHOLD</span><span class="p">,</span> <span class="n">DEFAULT_TAU_THRESHOLD</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="transform_lda_unpol">
+<a class="viewcode-back" href="../../api/transforms.html#jaxlibxc._transforms.transform_lda_unpol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_lda_unpol</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dens_threshold</span><span class="o">=</span><span class="n">DEFAULT_DENS_THRESHOLD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform unpolarized LDA inputs to (rs, zeta=0).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho: array of shape (N,) -- total electron density</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        rs: Wigner-Seitz radius, shape (N,)</span>
+<span class="sd">        zeta: spin polarization (all zeros), shape (N,)</span>
+<span class="sd">        mask: boolean mask where density is above threshold</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">RS_FACTOR</span> <span class="o">/</span> <span class="n">n</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">DIMENSIONS</span><span class="p">)</span>
+    <span class="n">zeta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">&gt;=</span> <span class="n">dens_threshold</span>
+    <span class="k">return</span> <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">mask</span></div>
+
+
+
+<div class="viewcode-block" id="transform_lda_pol">
+<a class="viewcode-back" href="../../api/transforms.html#jaxlibxc._transforms.transform_lda_pol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_lda_pol</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dens_threshold</span><span class="o">=</span><span class="n">DEFAULT_DENS_THRESHOLD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform polarized LDA inputs to (rs, zeta).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho: array of shape (N, 2) -- [rho_up, rho_down]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        rs, zeta, mask</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rho_up</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">rho_dn</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">rho_up</span> <span class="o">+</span> <span class="n">rho_dn</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">RS_FACTOR</span> <span class="o">/</span> <span class="n">n</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">DIMENSIONS</span><span class="p">)</span>
+    <span class="n">zeta</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho_up</span> <span class="o">-</span> <span class="n">rho_dn</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">rho</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">dens_threshold</span>
+    <span class="k">return</span> <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">mask</span></div>
+
+
+
+<div class="viewcode-block" id="transform_gga_unpol">
+<a class="viewcode-back" href="../../api/transforms.html#jaxlibxc._transforms.transform_gga_unpol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_gga_unpol</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span>
+                        <span class="n">dens_threshold</span><span class="o">=</span><span class="n">DEFAULT_DENS_THRESHOLD</span><span class="p">,</span>
+                        <span class="n">sigma_threshold</span><span class="o">=</span><span class="n">DEFAULT_SIGMA_THRESHOLD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform unpolarized GGA inputs to (rs, zeta, xt, xs0, xs1).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho: (N,) total density</span>
+<span class="sd">        sigma: (N,) squared gradient magnitude</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        rs, zeta, xt, xs0, xs1, mask</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">sigma_safe</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">sigma_threshold</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">RS_FACTOR</span> <span class="o">/</span> <span class="n">n</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">DIMENSIONS</span><span class="p">)</span>
+    <span class="n">zeta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span>
+
+    <span class="c1"># Reduced gradient: x = |grad n| / n^(4/3)</span>
+    <span class="n">xt</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_safe</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">**</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="c1"># For unpolarized: xs0 = xs1 = xt / 2^(1/3) (per-spin reduced gradient)</span>
+    <span class="n">xs0</span> <span class="o">=</span> <span class="n">xt</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">xs1</span> <span class="o">=</span> <span class="n">xs0</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">&gt;=</span> <span class="n">dens_threshold</span>
+    <span class="k">return</span> <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">xt</span><span class="p">,</span> <span class="n">xs0</span><span class="p">,</span> <span class="n">xs1</span><span class="p">,</span> <span class="n">mask</span></div>
+
+
+
+<div class="viewcode-block" id="transform_gga_pol">
+<a class="viewcode-back" href="../../api/transforms.html#jaxlibxc._transforms.transform_gga_pol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_gga_pol</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span>
+                      <span class="n">dens_threshold</span><span class="o">=</span><span class="n">DEFAULT_DENS_THRESHOLD</span><span class="p">,</span>
+                      <span class="n">sigma_threshold</span><span class="o">=</span><span class="n">DEFAULT_SIGMA_THRESHOLD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform polarized GGA inputs to (rs, zeta, xt, xs0, xs1).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho: (N, 2) [rho_up, rho_down]</span>
+<span class="sd">        sigma: (N, 3) [sigma_uu, sigma_ud, sigma_dd]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        rs, zeta, xt, xs0, xs1, mask</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rho_up</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">rho_dn</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">rho_up</span> <span class="o">+</span> <span class="n">rho_dn</span>
+
+    <span class="n">sigma_uu</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sigma</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sigma_threshold</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">sigma_dd</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sigma</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">sigma_threshold</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># Clamp cross-term by Cauchy-Schwarz</span>
+    <span class="n">s_ave</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma_uu</span> <span class="o">+</span> <span class="n">sigma_dd</span><span class="p">)</span>
+    <span class="n">sigma_ud</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">sigma</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">s_ave</span><span class="p">,</span> <span class="n">s_ave</span><span class="p">)</span>
+
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">RS_FACTOR</span> <span class="o">/</span> <span class="n">n</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">DIMENSIONS</span><span class="p">)</span>
+    <span class="n">zeta</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho_up</span> <span class="o">-</span> <span class="n">rho_dn</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="c1"># Total reduced gradient: xt = |grad n| / n^(4/3)</span>
+    <span class="n">sigma_tot</span> <span class="o">=</span> <span class="n">sigma_uu</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigma_ud</span> <span class="o">+</span> <span class="n">sigma_dd</span>
+    <span class="n">sigma_tot</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sigma_tot</span><span class="p">,</span> <span class="n">sigma_threshold</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">xt</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_tot</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">**</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+
+    <span class="c1"># Per-spin reduced gradients: xs_s = |grad n_s| / n_s^(4/3)</span>
+    <span class="n">xs0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_uu</span><span class="p">)</span> <span class="o">/</span> <span class="n">rho_up</span> <span class="o">**</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">xs1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_dd</span><span class="p">)</span> <span class="o">/</span> <span class="n">rho_dn</span> <span class="o">**</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">rho</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">dens_threshold</span>
+    <span class="k">return</span> <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">xt</span><span class="p">,</span> <span class="n">xs0</span><span class="p">,</span> <span class="n">xs1</span><span class="p">,</span> <span class="n">mask</span></div>
+
+
+
+<div class="viewcode-block" id="transform_mgga_unpol">
+<a class="viewcode-back" href="../../api/transforms.html#jaxlibxc._transforms.transform_mgga_unpol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_mgga_unpol</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">lapl</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span>
+                         <span class="n">dens_threshold</span><span class="o">=</span><span class="n">DEFAULT_DENS_THRESHOLD</span><span class="p">,</span>
+                         <span class="n">sigma_threshold</span><span class="o">=</span><span class="n">DEFAULT_SIGMA_THRESHOLD</span><span class="p">,</span>
+                         <span class="n">tau_threshold</span><span class="o">=</span><span class="n">DEFAULT_TAU_THRESHOLD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform unpolarized MGGA inputs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        rs, zeta, xt, xs0, xs1, u0, u1, t0, t1, mask</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">tau_safe</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">tau_threshold</span><span class="p">)</span>
+
+    <span class="c1"># Enforce Fermi hole curvature: sigma &lt;= 8*rho*tau</span>
+    <span class="n">sigma_clamped</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">sigma_threshold</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                                <span class="mf">8.0</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">tau_safe</span><span class="p">)</span>
+
+    <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">xt</span><span class="p">,</span> <span class="n">xs0</span><span class="p">,</span> <span class="n">xs1</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">transform_gga_unpol</span><span class="p">(</span>
+        <span class="n">rho</span><span class="p">,</span> <span class="n">sigma_clamped</span><span class="p">,</span> <span class="n">dens_threshold</span><span class="p">,</span> <span class="n">sigma_threshold</span><span class="p">)</span>
+
+    <span class="c1"># Per-spin kinetic energy density: ts = tau_s / n_s^(5/3)</span>
+    <span class="n">n_half</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">tau_safe</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">n_half</span> <span class="o">**</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">))</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">t0</span>
+
+    <span class="c1"># Laplacian: us = lapl_s / n_s^(5/3)</span>
+    <span class="n">u0</span> <span class="o">=</span> <span class="n">lapl</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">n_half</span> <span class="o">**</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">))</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">u0</span>
+
+    <span class="k">return</span> <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">xt</span><span class="p">,</span> <span class="n">xs0</span><span class="p">,</span> <span class="n">xs1</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">mask</span></div>
+
+
+
+<div class="viewcode-block" id="transform_mgga_pol">
+<a class="viewcode-back" href="../../api/transforms.html#jaxlibxc._transforms.transform_mgga_pol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_mgga_pol</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">lapl</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span>
+                       <span class="n">dens_threshold</span><span class="o">=</span><span class="n">DEFAULT_DENS_THRESHOLD</span><span class="p">,</span>
+                       <span class="n">sigma_threshold</span><span class="o">=</span><span class="n">DEFAULT_SIGMA_THRESHOLD</span><span class="p">,</span>
+                       <span class="n">tau_threshold</span><span class="o">=</span><span class="n">DEFAULT_TAU_THRESHOLD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform polarized MGGA inputs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        rs, zeta, xt, xs0, xs1, u0, u1, t0, t1, mask</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rho_up</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dens_threshold</span><span class="p">)</span>
+    <span class="n">rho_dn</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">rho</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dens_threshold</span><span class="p">)</span>
+
+    <span class="n">tau0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">tau</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tau_threshold</span><span class="p">)</span>
+    <span class="n">tau1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">tau</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tau_threshold</span><span class="p">)</span>
+
+    <span class="c1"># Enforce Fermi hole curvature: sigma_ss &lt;= 8*rho_s*tau_s</span>
+    <span class="n">sigma_clamped</span> <span class="o">=</span> <span class="n">sigma</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">sigma_uu</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sigma</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sigma_threshold</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                           <span class="mf">8.0</span> <span class="o">*</span> <span class="n">rho_up</span> <span class="o">*</span> <span class="n">tau0</span><span class="p">)</span>
+    <span class="n">sigma_dd</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sigma</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">sigma_threshold</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                           <span class="mf">8.0</span> <span class="o">*</span> <span class="n">rho_dn</span> <span class="o">*</span> <span class="n">tau1</span><span class="p">)</span>
+    <span class="n">sigma_clamped</span> <span class="o">=</span> <span class="n">sigma_clamped</span><span class="o">.</span><span class="n">at</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">sigma_uu</span><span class="p">)</span>
+    <span class="n">sigma_clamped</span> <span class="o">=</span> <span class="n">sigma_clamped</span><span class="o">.</span><span class="n">at</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">sigma_dd</span><span class="p">)</span>
+
+    <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">xt</span><span class="p">,</span> <span class="n">xs0</span><span class="p">,</span> <span class="n">xs1</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">transform_gga_pol</span><span class="p">(</span>
+        <span class="n">rho</span><span class="p">,</span> <span class="n">sigma_clamped</span><span class="p">,</span> <span class="n">dens_threshold</span><span class="p">,</span> <span class="n">sigma_threshold</span><span class="p">)</span>
+
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">tau0</span> <span class="o">/</span> <span class="n">rho_up</span> <span class="o">**</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">tau1</span> <span class="o">/</span> <span class="n">rho_dn</span> <span class="o">**</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+
+    <span class="n">u0</span> <span class="o">=</span> <span class="n">lapl</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">rho_up</span> <span class="o">**</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">lapl</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">rho_dn</span> <span class="o">**</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rs</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">xt</span><span class="p">,</span> <span class="n">xs0</span><span class="p">,</span> <span class="n">xs1</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">mask</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Connor Blake.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

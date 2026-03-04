@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Functionals &mdash; jaxlibxc 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Automatic Derivatives" href="derivatives.html" />
+    <link rel="prev" title="Quick Start" href="../quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jaxlibxc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#from-source">From source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#optional-testing">Optional: testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#optional-documentation">Optional: documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#verifying-the-installation">Verifying the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#gpu-support">GPU support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#basic-usage">Basic usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#gga-functionals">GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#meta-gga-functionals">Meta-GGA functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#spin-polarized-calculations">Spin-polarized calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#second-derivatives">Second derivatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#hybrid-functionals">Hybrid functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#listing-available-functionals">Listing available functionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#jit-compilation">JIT compilation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Functionals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implemented-functionals">Implemented functionals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lda-primitives">LDA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gga-primitives">GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meta-gga-primitives">Meta-GGA primitives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hybrid-functionals">Hybrid functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#input-variables-by-family">Input variables by family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lda">LDA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gga">GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meta-gga">Meta-GGA</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output-variables">Output variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#internal-variables">Internal variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="derivatives.html">Automatic Derivatives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="derivatives.html#how-it-works">How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derivatives.html#derivative-levels">Derivative levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derivatives.html#preprocessing-clamps-and-stop-gradient">Preprocessing clamps and stop_gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derivatives.html#numerical-safety">Numerical safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derivatives.html#comparison-with-libxc">Comparison with libxc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ml_optimization.html">Differentiable Parameters for ML</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ml_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml_optimization.html#accessing-parameters">Accessing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml_optimization.html#modifying-parameters">Modifying parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml_optimization.html#gradient-w-r-t-parameters">Gradient w.r.t. parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml_optimization.html#use-cases">Use cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ml_optimization.html#fitting-to-reference-data">Fitting to reference data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ml_optimization.html#neural-network-enhanced-functionals">Neural network-enhanced functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ml_optimization.html#parameter-reference">Parameter reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html#public-api">Public API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/functional.html">jaxlibxc.Functional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/registry.html">Registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/types.html">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html#internal-modules">Internal modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/constants.html">Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/autodiff.html">Autodiff Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/transforms.html">Variable Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/numerical.html">Numerical Safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/exchange.html">Exchange Wrappers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/mixed.html">Mixed/Hybrid Functionals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html#functional-families">Functional families</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lda.html">LDA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/gga.html">GGA Functionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/mgga.html">Meta-GGA Functionals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#adding-a-new-functional">Adding a new functional</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#gga-exchange">GGA exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#gga-correlation">GGA correlation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#meta-gga">Meta-GGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#mixed-hybrid-functional">Mixed/hybrid functional</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#testing">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#test-structure">Test structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#tolerances">Tolerances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#common-gotchas">Common gotchas</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jaxlibxc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Functionals</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user_guide/functionals.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="functionals">
+<h1>Functionals<a class="headerlink" href="#functionals" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>jaxlibxc implements exchange-correlation (XC) functionals organized by family:</p>
+<ul class="simple">
+<li><p><strong>LDA</strong> (Local Density Approximation) – depends only on electron density</p></li>
+<li><p><strong>GGA</strong> (Generalized Gradient Approximation) – adds density gradient dependence</p></li>
+<li><p><strong>Meta-GGA</strong> (MGGA) – adds kinetic energy density dependence</p></li>
+</ul>
+<p>Each functional also has a <em>kind</em>: exchange, correlation, exchange-correlation, or kinetic.</p>
+</section>
+<section id="implemented-functionals">
+<h2>Implemented functionals<a class="headerlink" href="#implemented-functionals" title="Link to this heading"></a></h2>
+<section id="lda-primitives">
+<h3>LDA primitives<a class="headerlink" href="#lda-primitives" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lda_x</span></code></p></td>
+<td><p>Slater exchange (Dirac 1930)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lda_x_2d</span></code></p></td>
+<td><p>2D Slater exchange</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lda_c_pw</span></code></p></td>
+<td><p>Perdew-Wang 92 correlation</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lda_c_pw_mod</span></code></p></td>
+<td><p>Perdew-Wang 92 (modified)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lda_c_vwn</span></code></p></td>
+<td><p>Vosko-Wilk-Nusair 5 correlation</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lda_c_vwn_rpa</span></code></p></td>
+<td><p>Vosko-Wilk-Nusair RPA correlation</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gga-primitives">
+<h3>GGA primitives<a class="headerlink" href="#gga-primitives" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gga_x_pbe</span></code></p></td>
+<td><p>Perdew-Burke-Ernzerhof exchange</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gga_x_pbe_sol</span></code></p></td>
+<td><p>PBEsol exchange</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gga_x_pbe_r</span></code></p></td>
+<td><p>revPBE exchange</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gga_x_rpbe</span></code></p></td>
+<td><p>RPBE exchange (Hammer et al.)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gga_x_apbe</span></code></p></td>
+<td><p>APBE exchange</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gga_x_pbe_tca</span></code></p></td>
+<td><p>TCA exchange</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gga_x_b88</span></code></p></td>
+<td><p>Becke 88 exchange</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gga_c_pbe</span></code></p></td>
+<td><p>PBE correlation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gga_c_pbe_sol</span></code></p></td>
+<td><p>PBEsol correlation</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gga_c_lyp</span></code></p></td>
+<td><p>Lee-Yang-Parr correlation</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="meta-gga-primitives">
+<h3>Meta-GGA primitives<a class="headerlink" href="#meta-gga-primitives" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mgga_x_scan</span></code></p></td>
+<td><p>SCAN exchange (Sun et al. 2015)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mgga_x_revscan</span></code></p></td>
+<td><p>Revised SCAN exchange</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mgga_c_scan</span></code></p></td>
+<td><p>SCAN correlation</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hybrid-functionals">
+<h3>Hybrid functionals<a class="headerlink" href="#hybrid-functionals" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Composition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hyb_gga_xc_b3lyp</span></code></p></td>
+<td><p>0.08 LDA_X + 0.72 B88 + 0.19 VWN_RPA + 0.81 LYP + 0.20 HF</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hyb_gga_xc_b3lyp5</span></code></p></td>
+<td><p>B3LYP with VWN5 instead of VWN_RPA</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hyb_gga_xc_b3pw91</span></code></p></td>
+<td><p>B3PW91</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hyb_gga_xc_pbeh</span></code></p></td>
+<td><p>PBE0 (0.75 PBE_X + PBE_C + 0.25 HF)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="input-variables-by-family">
+<h2>Input variables by family<a class="headerlink" href="#input-variables-by-family" title="Link to this heading"></a></h2>
+<section id="lda">
+<h3>LDA<a class="headerlink" href="#lda" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Input</p></th>
+<th class="head"><p>Shape (unpolarized)</p></th>
+<th class="head"><p>Shape (polarized)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code> – <code class="docutils literal notranslate"><span class="pre">[rho_up,</span> <span class="pre">rho_down]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gga">
+<h3>GGA<a class="headerlink" href="#gga" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Input</p></th>
+<th class="head"><p>Shape (unpolarized)</p></th>
+<th class="head"><p>Shape (polarized)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sigma</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,)</span></code> – `</p></td>
+<td><p>grad rho</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="meta-gga">
+<h3>Meta-GGA<a class="headerlink" href="#meta-gga" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Input</p></th>
+<th class="head"><p>Shape (unpolarized)</p></th>
+<th class="head"><p>Shape (polarized)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sigma</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">3)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lapl</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,)</span></code> – Laplacian of density</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tau</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,)</span></code> – kinetic energy density</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="output-variables">
+<h2>Output variables<a class="headerlink" href="#output-variables" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Output</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Shape (unpol)</p></th>
+<th class="head"><p>Shape (pol)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">zk</span></code></p></td>
+<td><p>Energy per electron</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vrho</span></code></p></td>
+<td><p>d(n*eps)/d(rho)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vsigma</span></code></p></td>
+<td><p>d(n*eps)/d(sigma)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">3)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vlapl</span></code></p></td>
+<td><p>d(n*eps)/d(lapl)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vtau</span></code></p></td>
+<td><p>d(n*eps)/d(tau)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">v2rho2</span></code></p></td>
+<td><p>d2(n*eps)/d(rho)^2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">3)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">v2rhosigma</span></code></p></td>
+<td><p>d2(n*eps)/d(rho)d(sigma)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">6)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">v2sigma2</span></code></p></td>
+<td><p>d2(n*eps)/d(sigma)^2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">6)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="internal-variables">
+<h2>Internal variables<a class="headerlink" href="#internal-variables" title="Link to this heading"></a></h2>
+<p>jaxlibxc transforms user inputs into internal variables matching libxc conventions:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rs</span></code></p></td>
+<td><p>Wigner-Seitz radius: <code class="docutils literal notranslate"><span class="pre">(3/(4*pi*n))^(1/3)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">zeta</span></code></p></td>
+<td><p>Spin polarization: <code class="docutils literal notranslate"><span class="pre">(n_up</span> <span class="pre">-</span> <span class="pre">n_down)</span> <span class="pre">/</span> <span class="pre">n</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">xt</span></code></p></td>
+<td><p>Total reduced gradient: `</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">xs0</span></code>, <code class="docutils literal notranslate"><span class="pre">xs1</span></code></p></td>
+<td><p>Per-spin reduced gradients</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">t0</span></code>, <code class="docutils literal notranslate"><span class="pre">t1</span></code></p></td>
+<td><p>Reduced kinetic energy densities per spin</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">u0</span></code>, <code class="docutils literal notranslate"><span class="pre">u1</span></code></p></td>
+<td><p>Reduced Laplacians per spin</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../quickstart.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="derivatives.html" class="btn btn-neutral float-right" title="Automatic Derivatives" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Connor Blake.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -55,7 +55,7 @@ def transform_gga_unpol(rho, sigma,
 
     Args:
         rho: (N,) total density
-        sigma: (N,) |grad n|^2
+        sigma: (N,) squared gradient magnitude
 
     Returns:
         rs, zeta, xt, xs0, xs1, mask

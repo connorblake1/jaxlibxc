@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jaxlibxc"
+version = "0.1.0"
+description = "Pure Python/JAX reimplementation of libxc exchange-correlation functionals"
+readme = "README.md"
+license = "MPL-2.0"
+requires-python = ">=3.9"
+authors = [
+    {name = "Connor Blake"},
+]
+keywords = ["DFT", "density-functional-theory", "exchange-correlation", "JAX", "autodiff"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "jax>=0.4.0",
+    "jaxlib>=0.4.0",
+    "numpy>=1.22",
+]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=7.0",
+    "sphinx-rtd-theme>=2.0",
+    "myst-parser>=3.0",
+]
+test = [
+    "pytest>=7.0",
+    "pyscf>=2.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/connorblake1/jaxlibxc"
+Documentation = "https://jaxlibxc.readthedocs.io"
+Repository = "https://github.com/connorblake1/jaxlibxc"
+Issues = "https://github.com/connorblake1/jaxlibxc/issues"
+
+[tool.setuptools.packages.find]
+include = ["jaxlibxc*"]
