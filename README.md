@@ -1,3 +1,4 @@
+HIGHLY EXPERIMENTAL - CLAUDE OPUS 4.6 WROTE THIS ENTIRE THING FROM SCRATCH - USE AT YOUR OWN RISK
 # jaxlibxc
 
 [![Documentation Status](https://readthedocs.org/projects/jaxlibxc/badge/?version=latest)](https://jaxlibxc.readthedocs.io/en/latest/?badge=latest)
