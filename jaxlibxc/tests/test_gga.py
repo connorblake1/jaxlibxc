@@ -171,3 +171,25 @@ class TestGGAJit:
 
         grad = jax.grad(loss)(jnp.array(0.8040))
         assert jnp.isfinite(grad)
+
+    def test_mixed_coeff_grad(self):
+        """Test gradients w.r.t. hybrid mixing coefficients (ML use case)."""
+        func_def = jaxlibxc.get_functional('hyb_gga_xc_b3lyp')
+        energy_fn = func_def.energy_fn
+
+        def loss(coeff_0):
+            params = {k: jnp.array(v) for k, v in func_def.default_params.items()}
+            params['coeff_0'] = coeff_0
+            from jaxlibxc._autodiff import compute_exc
+            from jaxlibxc._types import Family
+            rho = jnp.array([1.0])
+            sigma = jnp.array([0.1])
+            zk = compute_exc(energy_fn, params, Family.GGA, False,
+                             {'rho': rho, 'sigma': sigma},
+                             {'dens': 1e-15, 'sigma': 1e-15, 'tau': 1e-20, 'zeta': 1e-10})
+            return jnp.sum(zk)
+
+        default_coeff = jnp.array(func_def.default_params['coeff_0'])
+        grad = jax.grad(loss)(default_coeff)
+        assert jnp.isfinite(grad), f"Gradient w.r.t. mixing coeff is not finite: {grad}"
+        assert grad != 0.0, "Gradient w.r.t. mixing coeff should be non-zero"

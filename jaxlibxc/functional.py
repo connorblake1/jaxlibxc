@@ -15,6 +15,9 @@ from . import _autodiff
 class Functional:
     """Exchange-correlation functional with pylibxc-compatible interface.
 
+    Registered as a JAX pytree: _params dict values are dynamic leaves
+    (tracked through JIT/grad), everything else is static auxiliary data.
+
     Usage:
         func = Functional("lda_x", spin="unpolarized")
         out = func.compute({"rho": rho}, do_exc=True, do_vxc=True)
@@ -46,6 +49,37 @@ class Functional:
         self._sigma_threshold = DEFAULT_SIGMA_THRESHOLD
         self._tau_threshold = DEFAULT_TAU_THRESHOLD
         self._zeta_threshold = DEFAULT_ZETA_THRESHOLD
+
+    def tree_flatten(self):
+        """Pytree flatten: params are dynamic, everything else is static."""
+        children = (self._params,)
+        aux_data = (
+            self._info.name,
+            self._polarized,
+            self._dens_threshold,
+            self._sigma_threshold,
+            self._tau_threshold,
+            self._zeta_threshold,
+        )
+        return children, aux_data
+
+    @classmethod
+    def tree_unflatten(cls, aux_data, children):
+        """Pytree unflatten: reconstruct from static + dynamic data."""
+        (params,) = children
+        name, polarized, dens_thr, sigma_thr, tau_thr, zeta_thr = aux_data
+        spin = "polarized" if polarized else "unpolarized"
+        obj = cls.__new__(cls)
+        obj._def = registry_get(name)
+        obj._info = obj._def.info
+        obj._polarized = polarized
+        obj._nspin = 2 if polarized else 1
+        obj._params = params
+        obj._dens_threshold = dens_thr
+        obj._sigma_threshold = sigma_thr
+        obj._tau_threshold = tau_thr
+        obj._zeta_threshold = zeta_thr
+        return obj
 
     @property
     def params(self):
@@ -159,22 +193,35 @@ class Functional:
         family = self._info.family
         result = {}
 
-        if do_exc:
-            result['zk'] = _autodiff.compute_exc(
-                energy_fn, params, family, self._polarized,
-                inputs, thresholds)
-
-        if do_vxc:
+        if do_exc and do_vxc:
+            # Use value_and_grad to compute both in one forward+backward pass
             if family == Family.LDA:
-                vxc = _autodiff.compute_vxc_lda(
+                combined = _autodiff.compute_exc_vxc_lda(
                     energy_fn, params, self._polarized, inputs, thresholds)
             elif family == Family.GGA:
-                vxc = _autodiff.compute_vxc_gga(
+                combined = _autodiff.compute_exc_vxc_gga(
                     energy_fn, params, self._polarized, inputs, thresholds)
             elif family == Family.MGGA:
-                vxc = _autodiff.compute_vxc_mgga(
+                combined = _autodiff.compute_exc_vxc_mgga(
                     energy_fn, params, self._polarized, inputs, thresholds)
-            result.update(vxc)
+            result.update(combined)
+        else:
+            if do_exc:
+                result['zk'] = _autodiff.compute_exc(
+                    energy_fn, params, family, self._polarized,
+                    inputs, thresholds)
+
+            if do_vxc:
+                if family == Family.LDA:
+                    vxc = _autodiff.compute_vxc_lda(
+                        energy_fn, params, self._polarized, inputs, thresholds)
+                elif family == Family.GGA:
+                    vxc = _autodiff.compute_vxc_gga(
+                        energy_fn, params, self._polarized, inputs, thresholds)
+                elif family == Family.MGGA:
+                    vxc = _autodiff.compute_vxc_mgga(
+                        energy_fn, params, self._polarized, inputs, thresholds)
+                result.update(vxc)
 
         if do_fxc:
             if family == Family.LDA:
@@ -186,3 +233,12 @@ class Functional:
             result.update(fxc)
 
         return result
+
+
+# Register Functional as a JAX pytree so it can be passed through
+# JIT/grad boundaries and params mutations are properly tracked.
+jax.tree_util.register_pytree_node(
+    Functional,
+    lambda f: f.tree_flatten(),
+    lambda aux, children: Functional.tree_unflatten(aux, children),
+)

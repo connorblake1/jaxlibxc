@@ -131,6 +131,40 @@ class TestLDAX2D:
             "2D and 3D LDA exchange should differ"
 
 
+class TestPytree:
+    """Test Functional pytree registration."""
+
+    def test_jit_sees_param_change(self):
+        """Verify JIT retraces when params change (no stale cache)."""
+        func = jaxlibxc.Functional('lda_x', spin='unpolarized')
+        rho = jnp.array([1.0])
+
+        @jax.jit
+        def get_exc(f, rho):
+            return f.compute({'rho': rho}, do_exc=True)['zk']
+
+        zk1 = get_exc(func, rho)
+
+        # Mutate params: alpha=2.0 should give 2x the energy
+        func._params = {'alpha': jnp.array(2.0)}
+        zk2 = get_exc(func, rho)
+
+        assert not np.allclose(np.array(zk1), np.array(zk2)), \
+            "JIT should see param change via pytree, not return stale result"
+        np.testing.assert_allclose(np.array(zk2), 2.0 * np.array(zk1), rtol=1e-12)
+
+    def test_pytree_roundtrip(self):
+        """Verify flatten/unflatten preserves Functional state."""
+        func = jaxlibxc.Functional('gga_x_pbe', spin='polarized')
+        leaves, treedef = jax.tree_util.tree_flatten(func)
+        func2 = jax.tree_util.tree_unflatten(treedef, leaves)
+        assert func2.get_name() == 'gga_x_pbe'
+        assert func2._polarized is True
+        for k in func._params:
+            np.testing.assert_array_equal(
+                np.array(func._params[k]), np.array(func2._params[k]))
+
+
 class TestLDACPW:
     """Test PW92 correlation (after Phase 2 implementation)."""
     pass

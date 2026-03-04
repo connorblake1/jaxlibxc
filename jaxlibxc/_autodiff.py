@@ -10,6 +10,7 @@ import jax.numpy as jnp
 from functools import partial
 
 from ._types import Family
+from ._constants import RS_FACTOR, DIMENSIONS
 
 
 def _exc_per_volume_lda(rho_pt, energy_fn, params,
@@ -24,14 +25,12 @@ def _exc_per_volume_lda(rho_pt, energy_fn, params,
         rho_dn = rho_pt[1]
         n = rho_up + rho_dn
         n_safe = jnp.maximum(n, dens_threshold)
-        from ._constants import RS_FACTOR, DIMENSIONS
         rs = RS_FACTOR / n_safe ** (1.0 / DIMENSIONS)
         zeta = (jnp.maximum(rho_up, dens_threshold)
                 - jnp.maximum(rho_dn, dens_threshold)) / n_safe
     else:
         n = rho_pt
         n_safe = jnp.maximum(n, dens_threshold)
-        from ._constants import RS_FACTOR, DIMENSIONS
         rs = RS_FACTOR / n_safe ** (1.0 / DIMENSIONS)
         zeta = 0.0
 
@@ -47,7 +46,6 @@ def _exc_per_volume_gga(rho_pt, sigma_pt, energy_fn, params,
     rho_pt: scalar or (2,) array
     sigma_pt: scalar or (3,) array [sigma_uu, sigma_ud, sigma_dd]
     """
-    from ._constants import RS_FACTOR, DIMENSIONS
 
     if polarized:
         rho_up = jnp.maximum(rho_pt[0], dens_threshold)
@@ -90,7 +88,6 @@ def _exc_per_volume_mgga(rho_pt, sigma_pt, lapl_pt, tau_pt,
                          dens_threshold, sigma_threshold,
                          tau_threshold, zeta_threshold, polarized):
     """Energy per unit volume at a single grid point (MGGA)."""
-    from ._constants import RS_FACTOR, DIMENSIONS
 
     if polarized:
         rho_up = jnp.maximum(rho_pt[0], dens_threshold)
@@ -105,13 +102,17 @@ def _exc_per_volume_mgga(rho_pt, sigma_pt, lapl_pt, tau_pt,
 
         # Enforce Fermi hole curvature: sigma_ss <= 8*rho_s*tau_s
         # Use stop_gradient on the bound so derivatives don't flow through the clamp
+        # Use jnp.where (not jnp.minimum) to get correct gradient at boundary
         bound_uu = jax.lax.stop_gradient(8.0 * rho_up * tau0)
         bound_dd = jax.lax.stop_gradient(8.0 * rho_dn * tau1)
-        sigma_uu = jnp.minimum(sigma_uu, bound_uu)
-        sigma_dd = jnp.minimum(sigma_dd, bound_dd)
+        sigma_uu = jnp.where(sigma_uu > bound_uu, bound_uu, sigma_uu)
+        sigma_dd = jnp.where(sigma_dd > bound_dd, bound_dd, sigma_dd)
 
+        # Clip sigma_ud by Cauchy-Schwarz; use stop_gradient on bounds
+        # Use jnp.where instead of jnp.clip to get correct gradient at boundary
         s_ave = jax.lax.stop_gradient(0.5 * (sigma_uu + sigma_dd))
-        sigma_ud = jnp.clip(sigma_pt[1], -s_ave, s_ave)
+        sigma_ud = jnp.where(sigma_pt[1] > s_ave, s_ave,
+                             jnp.where(sigma_pt[1] < -s_ave, -s_ave, sigma_pt[1]))
 
         rs = RS_FACTOR / n ** (1.0 / DIMENSIONS)
         zeta = (rho_up - rho_dn) / n
@@ -132,7 +133,9 @@ def _exc_per_volume_mgga(rho_pt, sigma_pt, lapl_pt, tau_pt,
 
         # Enforce Fermi hole curvature: sigma <= 8*rho*tau
         # Use stop_gradient on the bound so derivatives don't flow through the clamp
-        sigma_safe = jnp.minimum(sigma_safe, jax.lax.stop_gradient(8.0 * n * tau_safe))
+        # Use jnp.where (not jnp.minimum) to get correct gradient at boundary
+        fermi_bound = jax.lax.stop_gradient(8.0 * n * tau_safe)
+        sigma_safe = jnp.where(sigma_safe > fermi_bound, fermi_bound, sigma_safe)
 
         rs = RS_FACTOR / n ** (1.0 / DIMENSIONS)
         zeta = 0.0
@@ -245,6 +248,123 @@ def compute_exc(energy_fn, params, family, polarized, inputs, thresholds):
         mask = n >= dens_thr
         zk = jnp.where(mask, zk, 0.0)
         return zk.reshape(-1, 1)
+
+
+def compute_exc_vxc_lda(energy_fn, params, polarized, inputs, thresholds):
+    """Compute energy + 1st derivatives for LDA using value_and_grad."""
+    dens_thr = thresholds['dens']
+    zeta_thr = thresholds['zeta']
+    rho = inputs['rho']
+
+    if polarized:
+        def _point(rho_pt):
+            return _exc_per_volume_lda(
+                rho_pt, energy_fn, params, dens_thr, zeta_thr, True)
+        vag_fn = jax.value_and_grad(_point)
+        exc_vol, vrho = jax.vmap(vag_fn)(rho)
+        n = rho[:, 0] + rho[:, 1]
+        mask = n >= dens_thr
+        n_safe = jnp.maximum(n, dens_thr)
+        zk = jnp.where(mask, exc_vol / n_safe, 0.0).reshape(-1, 1)
+        vrho = jnp.where(mask[:, None], vrho, 0.0)
+    else:
+        def _point(rho_pt):
+            return _exc_per_volume_lda(
+                rho_pt, energy_fn, params, dens_thr, zeta_thr, False)
+        vag_fn = jax.value_and_grad(_point)
+        exc_vol, vrho = jax.vmap(vag_fn)(rho)
+        n = rho
+        mask = rho >= dens_thr
+        n_safe = jnp.maximum(n, dens_thr)
+        zk = jnp.where(mask, exc_vol / n_safe, 0.0).reshape(-1, 1)
+        vrho = jnp.where(mask, vrho, 0.0).reshape(-1, 1)
+
+    return {'zk': zk, 'vrho': vrho}
+
+
+def compute_exc_vxc_gga(energy_fn, params, polarized, inputs, thresholds):
+    """Compute energy + 1st derivatives for GGA using value_and_grad."""
+    dens_thr = thresholds['dens']
+    sigma_thr = thresholds['sigma']
+    zeta_thr = thresholds['zeta']
+    rho = inputs['rho']
+    sigma = inputs['sigma']
+
+    if polarized:
+        def _point(rho_pt, sigma_pt):
+            return _exc_per_volume_gga(
+                rho_pt, sigma_pt, energy_fn, params,
+                dens_thr, sigma_thr, zeta_thr, True)
+        vag_fn = jax.value_and_grad(_point, argnums=(0, 1))
+        exc_vol, (vrho, vsigma) = jax.vmap(vag_fn)(rho, sigma)
+        n = rho[:, 0] + rho[:, 1]
+        mask = n >= dens_thr
+        n_safe = jnp.maximum(n, dens_thr)
+        zk = jnp.where(mask, exc_vol / n_safe, 0.0).reshape(-1, 1)
+        vrho = jnp.where(mask[:, None], vrho, 0.0)
+        vsigma = jnp.where(mask[:, None], vsigma, 0.0)
+    else:
+        def _point(rho_pt, sigma_pt):
+            return _exc_per_volume_gga(
+                rho_pt, sigma_pt, energy_fn, params,
+                dens_thr, sigma_thr, zeta_thr, False)
+        vag_fn = jax.value_and_grad(_point, argnums=(0, 1))
+        exc_vol, (vrho, vsigma) = jax.vmap(vag_fn)(rho, sigma)
+        n = rho
+        mask = rho >= dens_thr
+        n_safe = jnp.maximum(n, dens_thr)
+        zk = jnp.where(mask, exc_vol / n_safe, 0.0).reshape(-1, 1)
+        vrho = jnp.where(mask, vrho, 0.0).reshape(-1, 1)
+        vsigma = jnp.where(mask, vsigma, 0.0).reshape(-1, 1)
+
+    return {'zk': zk, 'vrho': vrho, 'vsigma': vsigma}
+
+
+def compute_exc_vxc_mgga(energy_fn, params, polarized, inputs, thresholds):
+    """Compute energy + 1st derivatives for MGGA using value_and_grad."""
+    dens_thr = thresholds['dens']
+    sigma_thr = thresholds['sigma']
+    tau_thr = thresholds['tau']
+    zeta_thr = thresholds['zeta']
+    rho = inputs['rho']
+    sigma = inputs['sigma']
+    lapl = inputs.get('lapl', jnp.zeros_like(inputs['tau']))
+    tau = inputs['tau']
+
+    if polarized:
+        def _point(rho_pt, sigma_pt, lapl_pt, tau_pt):
+            return _exc_per_volume_mgga(
+                rho_pt, sigma_pt, lapl_pt, tau_pt,
+                energy_fn, params,
+                dens_thr, sigma_thr, tau_thr, zeta_thr, True)
+        vag_fn = jax.value_and_grad(_point, argnums=(0, 1, 2, 3))
+        exc_vol, (vrho, vsigma, vlapl, vtau) = jax.vmap(vag_fn)(rho, sigma, lapl, tau)
+        n = rho[:, 0] + rho[:, 1]
+        mask = n >= dens_thr
+        n_safe = jnp.maximum(n, dens_thr)
+        zk = jnp.where(mask, exc_vol / n_safe, 0.0).reshape(-1, 1)
+        vrho = jnp.where(mask[:, None], vrho, 0.0)
+        vsigma = jnp.where(mask[:, None], vsigma, 0.0)
+        vlapl = jnp.where(mask[:, None], vlapl, 0.0)
+        vtau = jnp.where(mask[:, None], vtau, 0.0)
+    else:
+        def _point(rho_pt, sigma_pt, lapl_pt, tau_pt):
+            return _exc_per_volume_mgga(
+                rho_pt, sigma_pt, lapl_pt, tau_pt,
+                energy_fn, params,
+                dens_thr, sigma_thr, tau_thr, zeta_thr, False)
+        vag_fn = jax.value_and_grad(_point, argnums=(0, 1, 2, 3))
+        exc_vol, (vrho, vsigma, vlapl, vtau) = jax.vmap(vag_fn)(rho, sigma, lapl, tau)
+        n = rho
+        mask = rho >= dens_thr
+        n_safe = jnp.maximum(n, dens_thr)
+        zk = jnp.where(mask, exc_vol / n_safe, 0.0).reshape(-1, 1)
+        vrho = jnp.where(mask, vrho, 0.0).reshape(-1, 1)
+        vsigma = jnp.where(mask, vsigma, 0.0).reshape(-1, 1)
+        vlapl = jnp.where(mask, vlapl, 0.0).reshape(-1, 1)
+        vtau = jnp.where(mask, vtau, 0.0).reshape(-1, 1)
+
+    return {'zk': zk, 'vrho': vrho, 'vsigma': vsigma, 'vlapl': vlapl, 'vtau': vtau}
 
 
 def compute_vxc_lda(energy_fn, params, polarized, inputs, thresholds):
