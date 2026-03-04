@@ -7,7 +7,7 @@ import pytest
 
 jax.config.update("jax_enable_x64", True)
 
-import jaxc
+import jaxlibxc
 from .conftest import TOL_EXC, TOL_VXC, assert_close
 
 
@@ -21,11 +21,11 @@ def _make_mgga_inputs(spin=0):
         N = len(rho)
         grad_x = np.sqrt(sigma)
         pyscf_inp = np.array([rho, grad_x, np.zeros(N), np.zeros(N), lapl, tau])
-        jaxc_inp = {
+        jaxlibxc_inp = {
             'rho': jnp.array(rho), 'sigma': jnp.array(sigma),
             'lapl': jnp.array(lapl), 'tau': jnp.array(tau),
         }
-        return pyscf_inp, jaxc_inp
+        return pyscf_inp, jaxlibxc_inp
     else:
         N = 5
         rho_p = np.array([
@@ -55,20 +55,20 @@ def _make_mgga_inputs(spin=0):
         rho_up = np.array([rho_p[:,0], grad_up[:,0], grad_up[:,1], grad_up[:,2], lapl_p[:,0], tau_p[:,0]])
         rho_dn = np.array([rho_p[:,1], grad_dn[:,0], grad_dn[:,1], grad_dn[:,2], lapl_p[:,1], tau_p[:,1]])
         pyscf_inp = np.array([rho_up, rho_dn])
-        jaxc_inp = {
+        jaxlibxc_inp = {
             'rho': jnp.array(rho_p), 'sigma': jnp.array(sigma_p),
             'lapl': jnp.array(lapl_p), 'tau': jnp.array(tau_p),
         }
-        return pyscf_inp, jaxc_inp
+        return pyscf_inp, jaxlibxc_inp
 
 
 def _test_mgga_functional(name, spin=0):
     from pyscf.dft import libxc
-    pyscf_inp, jaxc_inp = _make_mgga_inputs(spin)
+    pyscf_inp, jaxlibxc_inp = _make_mgga_inputs(spin)
     ref_exc, ref_vxc, _, _ = libxc.eval_xc(name, pyscf_inp, spin=spin, deriv=1)
 
-    func = jaxc.Functional(name, spin='polarized' if spin else 'unpolarized')
-    out = func.compute(jaxc_inp, do_exc=True, do_vxc=True)
+    func = jaxlibxc.Functional(name, spin='polarized' if spin else 'unpolarized')
+    out = func.compute(jaxlibxc_inp, do_exc=True, do_vxc=True)
 
     label = f"{name} {'pol' if spin else 'unpol'}"
     assert_close(out['zk'], ref_exc, TOL_EXC, f"{label} exc")
@@ -95,7 +95,7 @@ class TestSCANC:
 
 class TestMGGAJit:
     def test_scan_jit(self):
-        func = jaxc.Functional('mgga_x_scan', spin='unpolarized')
+        func = jaxlibxc.Functional('mgga_x_scan', spin='unpolarized')
         rho = jnp.array([0.5, 1.0])
         sigma = jnp.array([0.1, 0.3])
         tau = jnp.array([0.2, 0.5])

@@ -1,6 +1,6 @@
 """Validation tests using independent reference data from external sources.
 
-Tests jaxc against hardcoded reference values from:
+Tests jaxlibxc against hardcoded reference values from:
 1. ExchCXX project (github.com/wavefunction91/ExchCXX) - 12-digit precision
 2. Density Functional Repository (http://www.cse.clrc.ac.uk/qcg/dft/) - via libxc testsuite
 3. Analytical formulas (LDA exchange)
@@ -17,7 +17,7 @@ import pytest
 
 jax.config.update("jax_enable_x64", True)
 
-import jaxc
+import jaxlibxc
 
 
 # ============================================================================
@@ -160,14 +160,14 @@ class TestExchCXXReference:
 
     def test_lda_x_exc(self):
         """LDA exchange energy per particle vs ExchCXX."""
-        func = jaxc.Functional('lda_x', spin='unpolarized')
+        func = jaxlibxc.Functional('lda_x', spin='unpolarized')
         out = func.compute({'rho': jnp.array(EXCHCXX_RHO)}, do_exc=True)
         _assert_close(out['zk'], EXCHCXX_LDA_X_EXC, 1e-10,
                       "LDA_X exc vs ExchCXX")
 
     def test_lda_x_vrho(self):
         """LDA exchange potential vs ExchCXX."""
-        func = jaxc.Functional('lda_x', spin='unpolarized')
+        func = jaxlibxc.Functional('lda_x', spin='unpolarized')
         out = func.compute({'rho': jnp.array(EXCHCXX_RHO)}, do_vxc=True)
         _assert_close(out['vrho'], EXCHCXX_LDA_X_VRHO, 1e-10,
                       "LDA_X vrho vs ExchCXX")
@@ -176,7 +176,7 @@ class TestExchCXXReference:
 
     def test_gga_c_lyp_exc(self):
         """LYP correlation energy vs ExchCXX."""
-        func = jaxc.Functional('gga_c_lyp', spin='unpolarized')
+        func = jaxlibxc.Functional('gga_c_lyp', spin='unpolarized')
         inp = {'rho': jnp.array(EXCHCXX_RHO),
                'sigma': jnp.array(EXCHCXX_SIGMA)}
         out = func.compute(inp, do_exc=True)
@@ -185,7 +185,7 @@ class TestExchCXXReference:
 
     def test_gga_c_lyp_vrho(self):
         """LYP correlation vrho vs ExchCXX."""
-        func = jaxc.Functional('gga_c_lyp', spin='unpolarized')
+        func = jaxlibxc.Functional('gga_c_lyp', spin='unpolarized')
         inp = {'rho': jnp.array(EXCHCXX_RHO),
                'sigma': jnp.array(EXCHCXX_SIGMA)}
         out = func.compute(inp, do_vxc=True)
@@ -194,7 +194,7 @@ class TestExchCXXReference:
 
     def test_gga_c_lyp_vsigma(self):
         """LYP correlation vsigma vs ExchCXX."""
-        func = jaxc.Functional('gga_c_lyp', spin='unpolarized')
+        func = jaxlibxc.Functional('gga_c_lyp', spin='unpolarized')
         inp = {'rho': jnp.array(EXCHCXX_RHO),
                'sigma': jnp.array(EXCHCXX_SIGMA)}
         out = func.compute(inp, do_vxc=True)
@@ -205,7 +205,7 @@ class TestExchCXXReference:
 
     def test_mgga_x_scan_exc(self):
         """SCAN exchange energy vs ExchCXX."""
-        func = jaxc.Functional('mgga_x_scan', spin='unpolarized')
+        func = jaxlibxc.Functional('mgga_x_scan', spin='unpolarized')
         inp = {'rho': jnp.array(EXCHCXX_RHO),
                'sigma': jnp.array(EXCHCXX_SIGMA),
                'lapl': jnp.array(EXCHCXX_LAPL),
@@ -216,7 +216,7 @@ class TestExchCXXReference:
 
     def test_mgga_x_scan_vtau(self):
         """SCAN exchange vtau vs ExchCXX."""
-        func = jaxc.Functional('mgga_x_scan', spin='unpolarized')
+        func = jaxlibxc.Functional('mgga_x_scan', spin='unpolarized')
         inp = {'rho': jnp.array(EXCHCXX_RHO),
                'sigma': jnp.array(EXCHCXX_SIGMA),
                'lapl': jnp.array(EXCHCXX_LAPL),
@@ -239,7 +239,7 @@ class TestAnalyticalLDAExchange:
         rho = np.array([0.001, 0.01, 0.1, 0.5, 1.0, 5.0, 100.0])
         expected_exc = -C_x * rho ** (1.0 / 3.0)
 
-        func = jaxc.Functional('lda_x', spin='unpolarized')
+        func = jaxlibxc.Functional('lda_x', spin='unpolarized')
         out = func.compute({'rho': jnp.array(rho)}, do_exc=True)
         _assert_close(out['zk'], expected_exc, 1e-12,
                       "LDA_X vs analytical formula")
@@ -250,7 +250,7 @@ class TestAnalyticalLDAExchange:
         rho = np.array([0.01, 0.1, 1.0, 10.0])
         expected_vrho = -(4.0 / 3.0) * C_x * rho ** (1.0 / 3.0)
 
-        func = jaxc.Functional('lda_x', spin='unpolarized')
+        func = jaxlibxc.Functional('lda_x', spin='unpolarized')
         out = func.compute({'rho': jnp.array(rho)}, do_vxc=True)
         _assert_close(out['vrho'], expected_vrho, 1e-12,
                       "LDA_X vrho vs analytical d/drho(rho*eps)")
@@ -268,7 +268,7 @@ class TestAnalyticalLDAExchange:
         rho_up = rho[:, 0]
         expected_exc = -C_x * (2.0 * rho_up) ** (1.0 / 3.0)
 
-        func = jaxc.Functional('lda_x', spin='polarized')
+        func = jaxlibxc.Functional('lda_x', spin='polarized')
         out = func.compute({'rho': jnp.array(rho)}, do_exc=True)
         _assert_close(out['zk'], expected_exc, 1e-4,
                       "LDA_X pol high-polarization")
@@ -283,14 +283,14 @@ class TestDFRepo:
 
     The df_repo stores zk as energy per volume (n * eps_xc) and derivatives
     as partial derivatives of the total energy density.
-    We use pyscf to verify the df_repo convention, then test jaxc matches.
+    We use pyscf to verify the df_repo convention, then test jaxlibxc matches.
     """
 
     def _eval_polarized(self, func_name, rhoa, rhob, sigaa, sigab, sigbb):
-        """Evaluate jaxc functional on a single polarized point."""
+        """Evaluate jaxlibxc functional on a single polarized point."""
         rho = jnp.array([[rhoa, rhob]])
         sigma = jnp.array([[sigaa, sigab, sigbb]])
-        func = jaxc.Functional(func_name, spin='polarized')
+        func = jaxlibxc.Functional(func_name, spin='polarized')
         out = func.compute({'rho': rho, 'sigma': sigma},
                            do_exc=True, do_vxc=True)
         n = rhoa + rhob
@@ -305,9 +305,9 @@ class TestDFRepo:
         return zk, vrho, vsigma
 
     def _eval_polarized_lda(self, func_name, rhoa, rhob):
-        """Evaluate jaxc LDA functional on a single polarized point."""
+        """Evaluate jaxlibxc LDA functional on a single polarized point."""
         rho = jnp.array([[rhoa, rhob]])
-        func = jaxc.Functional(func_name, spin='polarized')
+        func = jaxlibxc.Functional(func_name, spin='polarized')
         out = func.compute({'rho': rho}, do_exc=True, do_vxc=True)
         n = rhoa + rhob
         zk_arr = np.array(out['zk']).ravel()
@@ -402,7 +402,7 @@ class TestLibxcJlReference:
 
     def test_gga_x_pbe_exc(self):
         """PBE exchange energy vs Libxc.jl (6-digit precision)."""
-        func = jaxc.Functional('gga_x_pbe', spin='unpolarized')
+        func = jaxlibxc.Functional('gga_x_pbe', spin='unpolarized')
         inp = {'rho': jnp.array(JULIA_RHO),
                'sigma': jnp.array(JULIA_SIGMA)}
         out = func.compute(inp, do_exc=True)
@@ -461,7 +461,7 @@ class TestBrOHMolecularDensity:
             rho_pyscf = np.array([[pt['rhoa']], [pt['rhob']]])
             ref_exc, ref_vxc, _, _ = libxc.eval_xc('lda_x', rho_pyscf, spin=1, deriv=1)
 
-            func = jaxc.Functional('lda_x', spin='polarized')
+            func = jaxlibxc.Functional('lda_x', spin='polarized')
             out = func.compute({'rho': jnp.array(rho_pol)}, do_exc=True, do_vxc=True)
             _assert_close(out['zk'], ref_exc, 1e-10,
                           f"LDA_X BrOH {label} exc")
@@ -477,7 +477,7 @@ class TestBrOHMolecularDensity:
             rho_pyscf = np.array([[pt['rhoa']], [pt['rhob']]])
             ref_exc, ref_vxc, _, _ = libxc.eval_xc('lda_c_pw', rho_pyscf, spin=1, deriv=1)
 
-            func = jaxc.Functional('lda_c_pw', spin='polarized')
+            func = jaxlibxc.Functional('lda_c_pw', spin='polarized')
             out = func.compute({'rho': jnp.array(rho_pol)}, do_exc=True, do_vxc=True)
             _assert_close(out['zk'], ref_exc, 1e-10,
                           f"LDA_C_PW BrOH {label} exc")
@@ -500,7 +500,7 @@ class TestBrOHMolecularDensity:
             rho_pyscf = np.array([rho_up, rho_dn])
             ref_exc, ref_vxc, _, _ = libxc.eval_xc('gga_x_pbe', rho_pyscf, spin=1, deriv=1)
 
-            func = jaxc.Functional('gga_x_pbe', spin='polarized')
+            func = jaxlibxc.Functional('gga_x_pbe', spin='polarized')
             inp = {'rho': jnp.array(rho_pol), 'sigma': jnp.array(sigma_pol)}
             out = func.compute(inp, do_exc=True, do_vxc=True)
             _assert_close(out['zk'], ref_exc, 1e-10,
@@ -521,7 +521,7 @@ class TestBrOHMolecularDensity:
             rho_pyscf = np.array([rho_up, rho_dn])
             ref_exc, ref_vxc, _, _ = libxc.eval_xc('gga_c_lyp', rho_pyscf, spin=1, deriv=1)
 
-            func = jaxc.Functional('gga_c_lyp', spin='polarized')
+            func = jaxlibxc.Functional('gga_c_lyp', spin='polarized')
             inp = {'rho': jnp.array(rho_pol), 'sigma': jnp.array(sigma_pol)}
             out = func.compute(inp, do_exc=True, do_vxc=True)
             _assert_close(out['zk'], ref_exc, 1e-8,
@@ -548,10 +548,10 @@ class TestCrossFunctionalConsistency:
         # B3LYP DFT portion (excluding 0.20 HF exchange)
         # = (1 - 0.20) * LDA_X + 0.72 * (B88_X - LDA_X) + 0.81 * LYP + 0.19 * VWN_RPA
         # = 0.08 * LDA_X + 0.72 * B88_X + 0.81 * LYP + 0.19 * VWN_RPA
-        lda_x = jaxc.Functional('lda_x', spin='unpolarized')
-        b88_x = jaxc.Functional('gga_x_b88', spin='unpolarized')
-        lyp_c = jaxc.Functional('gga_c_lyp', spin='unpolarized')
-        vwn_rpa = jaxc.Functional('lda_c_vwn_rpa', spin='unpolarized')
+        lda_x = jaxlibxc.Functional('lda_x', spin='unpolarized')
+        b88_x = jaxlibxc.Functional('gga_x_b88', spin='unpolarized')
+        lyp_c = jaxlibxc.Functional('gga_c_lyp', spin='unpolarized')
+        vwn_rpa = jaxlibxc.Functional('lda_c_vwn_rpa', spin='unpolarized')
 
         exc_lda = lda_x.compute({'rho': rho}, do_exc=True)['zk']
         exc_b88 = b88_x.compute(inp, do_exc=True)['zk']
@@ -564,7 +564,7 @@ class TestCrossFunctionalConsistency:
                         + 0.19 * np.array(exc_vwn))
 
         # B3LYP registered functional (excludes HF part)
-        b3lyp = jaxc.Functional('hyb_gga_xc_b3lyp', spin='unpolarized')
+        b3lyp = jaxlibxc.Functional('hyb_gga_xc_b3lyp', spin='unpolarized')
         exc_b3lyp = b3lyp.compute(inp, do_exc=True)['zk']
 
         _assert_close(exc_b3lyp, manual_b3lyp, 1e-10,
@@ -579,15 +579,15 @@ class TestCrossFunctionalConsistency:
         sigma = jnp.array([0.05, 0.1, 0.3, 1.0])
         inp = {'rho': rho, 'sigma': sigma}
 
-        pbe_x = jaxc.Functional('gga_x_pbe', spin='unpolarized')
-        pbe_c = jaxc.Functional('gga_c_pbe', spin='unpolarized')
+        pbe_x = jaxlibxc.Functional('gga_x_pbe', spin='unpolarized')
+        pbe_c = jaxlibxc.Functional('gga_c_pbe', spin='unpolarized')
 
         exc_x = pbe_x.compute(inp, do_exc=True)['zk']
         exc_c = pbe_c.compute(inp, do_exc=True)['zk']
 
         manual_pbe0 = 0.75 * np.array(exc_x) + np.array(exc_c)
 
-        pbe0 = jaxc.Functional('hyb_gga_xc_pbeh', spin='unpolarized')
+        pbe0 = jaxlibxc.Functional('hyb_gga_xc_pbeh', spin='unpolarized')
         exc_pbe0 = pbe0.compute(inp, do_exc=True)['zk']
 
         _assert_close(exc_pbe0, manual_pbe0, 1e-10,
@@ -598,8 +598,8 @@ class TestCrossFunctionalConsistency:
         rho = jnp.array([0.1, 0.5, 1.0, 5.0])
         sigma_zero = jnp.zeros(4)
 
-        lda_x = jaxc.Functional('lda_x', spin='unpolarized')
-        pbe_x = jaxc.Functional('gga_x_pbe', spin='unpolarized')
+        lda_x = jaxlibxc.Functional('lda_x', spin='unpolarized')
+        pbe_x = jaxlibxc.Functional('gga_x_pbe', spin='unpolarized')
 
         exc_lda = lda_x.compute({'rho': rho}, do_exc=True)['zk']
         exc_pbe = pbe_x.compute({'rho': rho, 'sigma': sigma_zero}, do_exc=True)['zk']
@@ -612,12 +612,12 @@ class TestCrossFunctionalConsistency:
         rho = jnp.array([0.5, 1.0, 2.0])
         sigma = jnp.zeros(3)
         # tau_unif = K_FACTOR_C * rho^(5/3) for unpolarized
-        from jaxc._constants import K_FACTOR_C
+        from jaxlibxc._constants import K_FACTOR_C
         tau_unif = K_FACTOR_C * rho ** (5.0 / 3.0)
         lapl = jnp.zeros(3)
 
-        lda_x = jaxc.Functional('lda_x', spin='unpolarized')
-        scan_x = jaxc.Functional('mgga_x_scan', spin='unpolarized')
+        lda_x = jaxlibxc.Functional('lda_x', spin='unpolarized')
+        scan_x = jaxlibxc.Functional('mgga_x_scan', spin='unpolarized')
 
         exc_lda = lda_x.compute({'rho': rho}, do_exc=True)['zk']
         exc_scan = scan_x.compute(
@@ -650,7 +650,7 @@ class TestJAXFeaturesExternal:
 
     def test_jit_lda_x(self):
         """JIT compilation on ExchCXX inputs."""
-        func = jaxc.Functional('lda_x', spin='unpolarized')
+        func = jaxlibxc.Functional('lda_x', spin='unpolarized')
 
         @jax.jit
         def compute_exc(rho):
@@ -665,7 +665,7 @@ class TestJAXFeaturesExternal:
 
     def test_jit_gga_c_lyp(self):
         """JIT compilation for LYP on ExchCXX inputs."""
-        func = jaxc.Functional('gga_c_lyp', spin='unpolarized')
+        func = jaxlibxc.Functional('gga_c_lyp', spin='unpolarized')
 
         @jax.jit
         def compute_exc(rho, sigma):
@@ -679,7 +679,7 @@ class TestJAXFeaturesExternal:
 
     def test_param_grad_pbe(self):
         """Gradient of PBE energy w.r.t. kappa parameter."""
-        func = jaxc.Functional('gga_x_pbe', spin='unpolarized')
+        func = jaxlibxc.Functional('gga_x_pbe', spin='unpolarized')
         rho = jnp.array([0.3, 1.0])
         sigma = jnp.array([0.1, 0.3])
 
@@ -708,7 +708,7 @@ class TestExtremeDensities:
         sigma = jnp.array([1e-20, 1e-16, 1e-12])
 
         for name in ['lda_x', 'lda_c_pw', 'gga_x_pbe', 'gga_c_lyp']:
-            func = jaxc.Functional(name, spin='unpolarized')
+            func = jaxlibxc.Functional(name, spin='unpolarized')
             if 'gga' in name:
                 out = func.compute({'rho': rho, 'sigma': sigma}, do_exc=True)
             else:
@@ -722,7 +722,7 @@ class TestExtremeDensities:
         sigma = jnp.array([1e6, 1e8, 1e10])
 
         for name in ['lda_x', 'lda_c_pw', 'gga_x_pbe', 'gga_c_pbe']:
-            func = jaxc.Functional(name, spin='unpolarized')
+            func = jaxlibxc.Functional(name, spin='unpolarized')
             if 'gga' in name:
                 out = func.compute({'rho': rho, 'sigma': sigma}, do_exc=True)
             else:
@@ -736,7 +736,7 @@ class TestExtremeDensities:
         sigma = jnp.array([[0.1, 0.0, 0.0], [0.05, 0.0, 0.0]])
 
         for name in ['lda_x', 'lda_c_pw', 'gga_x_pbe', 'gga_c_lyp']:
-            func = jaxc.Functional(name, spin='polarized')
+            func = jaxlibxc.Functional(name, spin='polarized')
             if 'gga' in name:
                 out = func.compute({'rho': rho, 'sigma': sigma}, do_exc=True)
             else:

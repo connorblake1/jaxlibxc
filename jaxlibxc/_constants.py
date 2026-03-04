@@ -1,4 +1,4 @@
-"""Physical and mathematical constants used throughout jaxc.
+"""Physical and mathematical constants used throughout jaxlibxc.
 
 Translated from libxc maple/util.mpl.
 """

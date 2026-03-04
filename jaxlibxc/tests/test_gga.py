@@ -7,7 +7,7 @@ import pytest
 
 jax.config.update("jax_enable_x64", True)
 
-import jaxc
+import jaxlibxc
 from .conftest import TOL_EXC, TOL_VXC, TOL_FXC, assert_close
 
 
@@ -19,8 +19,8 @@ def _make_gga_inputs(spin=0):
         grad_x = np.sqrt(sigma)
         N = len(rho)
         pyscf_inp = np.array([rho, grad_x, np.zeros(N), np.zeros(N)])
-        jaxc_inp = {'rho': jnp.array(rho), 'sigma': jnp.array(sigma)}
-        return pyscf_inp, jaxc_inp
+        jaxlibxc_inp = {'rho': jnp.array(rho), 'sigma': jnp.array(sigma)}
+        return pyscf_inp, jaxlibxc_inp
     else:
         N = 6
         rho_p = np.array([
@@ -44,19 +44,19 @@ def _make_gga_inputs(spin=0):
         rho_up_arr = np.array([rho_p[:, 0], grad_up[:, 0], grad_up[:, 1], grad_up[:, 2]])
         rho_dn_arr = np.array([rho_p[:, 1], grad_dn[:, 0], grad_dn[:, 1], grad_dn[:, 2]])
         pyscf_inp = np.array([rho_up_arr, rho_dn_arr])
-        jaxc_inp = {'rho': jnp.array(rho_p), 'sigma': jnp.array(sigma_p)}
-        return pyscf_inp, jaxc_inp
+        jaxlibxc_inp = {'rho': jnp.array(rho_p), 'sigma': jnp.array(sigma_p)}
+        return pyscf_inp, jaxlibxc_inp
 
 
 def _test_gga_functional(name, spin=0, test_vxc=True, test_fxc=False):
     """Generic test helper for a GGA functional."""
     from pyscf.dft import libxc
-    pyscf_inp, jaxc_inp = _make_gga_inputs(spin)
+    pyscf_inp, jaxlibxc_inp = _make_gga_inputs(spin)
     deriv = 2 if test_fxc else 1
     ref_exc, ref_vxc, ref_fxc, _ = libxc.eval_xc(name, pyscf_inp, spin=spin, deriv=deriv)
 
-    func = jaxc.Functional(name, spin='polarized' if spin else 'unpolarized')
-    out = func.compute(jaxc_inp, do_exc=True, do_vxc=test_vxc, do_fxc=test_fxc)
+    func = jaxlibxc.Functional(name, spin='polarized' if spin else 'unpolarized')
+    out = func.compute(jaxlibxc_inp, do_exc=True, do_vxc=test_vxc, do_fxc=test_fxc)
 
     label = f"{name} {'pol' if spin else 'unpol'}"
     assert_close(out['zk'], ref_exc, TOL_EXC, f"{label} exc")
@@ -105,7 +105,7 @@ class TestGGACLYP:
 
 class TestGGAJit:
     def test_pbe_jit(self):
-        func = jaxc.Functional('gga_x_pbe', spin='unpolarized')
+        func = jaxlibxc.Functional('gga_x_pbe', spin='unpolarized')
         rho = jnp.array([0.1, 0.5, 1.0])
         sigma = jnp.array([0.01, 0.1, 0.3])
 
@@ -119,13 +119,13 @@ class TestGGAJit:
 
     def test_param_grad(self):
         """Test gradients w.r.t. PBE parameters (ML use case)."""
-        func_def = jaxc.get_functional('gga_x_pbe')
+        func_def = jaxlibxc.get_functional('gga_x_pbe')
         energy_fn = func_def.energy_fn
 
         def loss(kappa):
             params = {'kappa': kappa, 'mu': jnp.array(0.2195149727645171)}
-            from jaxc._autodiff import compute_exc
-            from jaxc._types import Family
+            from jaxlibxc._autodiff import compute_exc
+            from jaxlibxc._types import Family
             rho = jnp.array([1.0])
             sigma = jnp.array([0.1])
             zk = compute_exc(energy_fn, params, Family.GGA, False,

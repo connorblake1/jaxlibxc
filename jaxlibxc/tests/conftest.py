@@ -1,4 +1,4 @@
-"""Test fixtures and helpers for jaxc tests."""
+"""Test fixtures and helpers for jaxlibxc tests."""
 
 import numpy as np
 import jax
@@ -69,7 +69,7 @@ def pyscf_eval_xc(func_name, rho, spin=0, deriv=1):
 
     Args:
         func_name: libxc functional name (e.g. 'lda_x', 'gga_x_pbe')
-        rho: for spin=0: (N,) array; for spin=1: (N, 2) in jaxc format
+        rho: for spin=0: (N,) array; for spin=1: (N, 2) in jaxlibxc format
         spin: 0 for unpolarized, 1 for polarized
         deriv: derivative order
 
@@ -81,7 +81,7 @@ def pyscf_eval_xc(func_name, rho, spin=0, deriv=1):
     if spin == 0:
         return libxc.eval_xc(func_name, rho, spin=0, deriv=deriv)
     else:
-        # Convert from jaxc format (N,2) to pyscf format (2,N)
+        # Convert from jaxlibxc format (N,2) to pyscf format (2,N)
         rho_pyscf = rho.T  # (2, N)
         return libxc.eval_xc(func_name, rho_pyscf, spin=1, deriv=deriv)
 

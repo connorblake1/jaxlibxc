@@ -1,0 +1,25 @@
+jaxlibxc - Exchange-correlation functionals in JAX
+===================================================
+
+This project is an independent reimplementation of the mathematical
+formulas and algorithmic structure found in the libxc library.
+
+Original libxc library:
+  Copyright (C) 2006-2021 M.A.L. Marques
+  Copyright (C) 2015-2021 Susi Lehtola
+  Copyright (C) 2019      X. Andrade
+  Licensed under the Mozilla Public License, Version 2.0
+  https://libxc.gitlab.io/
+  https://github.com/ElectronicStructureLibrary/libxc
+
+The mathematical definitions of exchange-correlation functionals are
+from published scientific literature. The variable transformation
+conventions (rs, zeta, xt, xs, ts) and input preprocessing logic
+(density thresholds, Fermi hole curvature constraint, Cauchy-Schwarz
+sigma clamp) follow libxc's implementation in work_{lda,gga,mgga}_inc.c.
+
+Reference:
+  S. Lehtola, C. Steigemann, M. J. T. Oliveira, and M. A. L. Marques,
+  "Recent developments in libxc -- A comprehensive library of functionals
+  for density functional theory", SoftwareX 7, 1-5 (2018).
+  https://doi.org/10.1016/j.softx.2017.11.002

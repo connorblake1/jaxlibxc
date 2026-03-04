@@ -1,4 +1,4 @@
-"""jaxc: Exchange-correlation functionals in JAX.
+"""jaxlibxc: Exchange-correlation functionals in JAX.
 
 A reimplementation of libxc using JAX for automatic differentiation,
 JIT compilation, and GPU acceleration.

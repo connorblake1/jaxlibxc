@@ -1,4 +1,4 @@
-"""Type definitions for jaxc."""
+"""Type definitions for jaxlibxc."""
 
 import enum
 from typing import NamedTuple, Callable, Optional
